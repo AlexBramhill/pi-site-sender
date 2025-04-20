@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { chromium, Browser } from "playwright";
-import Jimp from "jimp";
+import { Jimp, JimpMime } from "jimp";
 
 const app = express();
 const PORT = 4000;
@@ -15,17 +15,23 @@ app.get("/screenshot", async (req: Request, res: Response) => {
   try {
     browser = await chromium.launch();
     const context = await browser.newContext({
-      viewport: { width, height }, // Use query parameters
+      viewport: { width, height },
     });
     const page = await context.newPage();
     await page.goto(targetUrl, { waitUntil: "networkidle" });
 
-    // Take a screenshot without any further processing
+    // Take a screenshot
     const screenshotBuffer = await page.screenshot();
 
-    // Send the raw screenshot as a PNG response
+    // Process the screenshot with Jimp
+    const image = await Jimp.read(screenshotBuffer);
+    image.greyscale().dither();
+
+    const processedBuffer = await image.getBuffer(JimpMime.png);
+
+    // Send the processed image as a PNG response
     res.set("Content-Type", "image/png");
-    res.send(screenshotBuffer);
+    res.send(processedBuffer);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Failed to take screenshot");

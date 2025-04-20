@@ -13,6 +13,13 @@ export default function Home() {
           height={38}
           priority
         />
+        <Image
+          className={styles.image}
+          src="/img/1992_Stock_at_East_Acton.jpg"
+          alt="1992 Sock at East Acton"
+          width={300}
+          height={200}
+        />
         <ol>
           <li>
             Get started by editing <code>src/app/page.tsx</code>.
