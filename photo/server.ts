@@ -12,16 +12,11 @@ app.get("/", async (req: Request, res: Response) => {
   const width = parseInt(req.query.width as string) || 1280;
   const height = parseInt(req.query.height as string) || 720;
 
-  try {
-    const screenshotBuffer = await takeScreenshot({ targetUrl, width, height });
-    const processedImage = await processImage(screenshotBuffer);
+  const screenshotBuffer = await takeScreenshot({ targetUrl, width, height });
+  const processedImage = await processImage(screenshotBuffer);
 
-    res.set("Content-Type", "image/png");
-    res.send(processedImage);
-  } catch (err) {
-    console.error("Error:", err);
-    res.status(500).send("Failed to take screenshot");
-  } 
+  res.set("Content-Type", "image/png");
+  res.send(processedImage);
 });
 
 app.listen(PORT, () => {
