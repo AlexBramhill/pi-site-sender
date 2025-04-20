@@ -14,8 +14,5 @@ COPY . /app
 # Expose the port that the server will run on
 EXPOSE 4000
 
-# # Command to run the server
-# CMD ["ts-node", "server.ts"]
-
-# Run the server
-CMD ["node", "server.js"]
+# Command to run the server
+CMD ["npx", "ts-node", "server.ts"]

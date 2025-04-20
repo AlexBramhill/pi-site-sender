@@ -1,20 +1,21 @@
-const express = require("express");
-const { chromium } = require("playwright");
-const Jimp = require("jimp");
+import express, { Request, Response } from "express";
+import { chromium, Browser } from "playwright";
+import Jimp from "jimp";
 
 const app = express();
 const PORT = 4000;
 const PORT_REMOTE = 3000;
 
-app.get("/screenshot", async (req, res) => {
+app.get("/screenshot", async (req: Request, res: Response) => {
   const targetUrl = `http://site:${PORT_REMOTE}`;
-  const { width = 1280, height = 720 } = req.query;
-  let browser;
+  const width = parseInt(req.query.width as string) || 1280;
+  const height = parseInt(req.query.height as string) || 720;
+  let browser: Browser | null = null;
 
   try {
     browser = await chromium.launch();
     const context = await browser.newContext({
-      viewport: { width: parseInt(width), height: parseInt(height) }, // Use query parameters
+      viewport: { width, height }, // Use query parameters
     });
     const page = await context.newPage();
     await page.goto(targetUrl, { waitUntil: "networkidle" });
