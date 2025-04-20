@@ -8,12 +8,13 @@ const PORT_REMOTE = 3000;
 
 app.get("/screenshot", async (req, res) => {
   const targetUrl = `http://site:${PORT_REMOTE}`;
+  const { width = 1280, height = 720 } = req.query;
   let browser;
 
   try {
     browser = await chromium.launch();
     const context = await browser.newContext({
-      viewport: { width: 1280, height: 720 },
+      viewport: { width: parseInt(width), height: parseInt(height) }, // Use query parameters
     });
     const page = await context.newPage();
     await page.goto(targetUrl, { waitUntil: "networkidle" });
