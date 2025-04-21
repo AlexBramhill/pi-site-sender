@@ -1,7 +1,10 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { getLineStatus } from "./api/tube/tube";
+import { config } from "./config/config";
 
-export default function Home() {
+export default async function Home() {
+  const lineStatus = await getLineStatus(config.HOME_TUBE_LINE_NAME); // Replace "northern" with the desired line ID
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -20,13 +23,20 @@ export default function Home() {
           width={300}
           height={200}
         />
+        <div>
+          <h2>{lineStatus.name}</h2>
+          <ul>
+            {lineStatus.lineStatuses.map((status, index) => (
+              <li key={index}>{status.statusSeverityDescription}</li>
+            ))}
+          </ul>
+        </div>
         <ol>
           <li>
             Get started by editing <code>src/app/page.tsx</code>.
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
-
         <div className={styles.ctas}>
           <a
             className={styles.primary}
