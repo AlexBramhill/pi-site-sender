@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "path": "site"
+    },
+    {
+      "path": "photo"
+    },
+    {
+      "path": "pico"
+    },
+    {
+      "path": "."
+    },
+    {
+      "name": "Mpy Remote Workspace",
+      "uri": "pico:"
+    }
+  ],
+  "settings": {
+    "micropico.syncFolder": "pico"
+  }
+}
