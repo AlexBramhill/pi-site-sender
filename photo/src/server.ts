@@ -19,5 +19,7 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(
+    `${process.env.NODE_ENV} server running at http://localhost:${PORT}`
+  );
 });
