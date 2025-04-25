@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  photo:
+    build:
+      dockerfile: Dockerfile.prod
+    image: photo:prod:latest
+    environment:
+      - NODE_ENV=production 
+    ports:
+      - "4000:4000"

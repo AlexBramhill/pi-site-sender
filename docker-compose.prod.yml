@@ -2,25 +2,16 @@ version: '3.8'
 
 services:
   site:
-    build:
-      context: ./site
-    image: site:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - shared-network
+    extends:
+      file: site/docker-compose.prod.yml
+      service: site
 
   photo:
-    build:
-      context: ./photo
-    image: photo:latest
-    ports:
-      - "4000:4000"
-    networks:
-      - shared-network
-    depends_on:
-      - site
-      
+
+    extends:
+      file: photo/docker-compose.prod.yml
+      service: photo
+
 networks:
   shared-network:
     driver: bridge

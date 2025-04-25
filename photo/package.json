@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --legacy-watch",
     "docker:dev": "docker compose --file docker-compose.dev.yml up --build",
-    "prod": "NODE_ENV=production ts-node src/index.ts"
+    "docker:prod": "docker compose --file docker-compose.prod.yml up --build"
   },
   "keywords": [],
   "author": "",

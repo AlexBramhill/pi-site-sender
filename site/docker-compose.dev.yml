@@ -3,9 +3,14 @@ version: '3.8'
 services:
   site:
     build:
-      dockerfile: Dockerfile # Specify Dockerfile for the site service
+      dockerfile: Dockerfile.dev
     image: site:dev
+    volumes:
+      - ./src:/app/src
     environment:
-      - NODE_ENV=development # Set the environment variable for development
+      - NODE_ENV=development
+      - FAST_REFRESH=false
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"

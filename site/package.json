@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "nodemon --legacy-watch",
     "docker:dev": "docker compose --file docker-compose.dev.yml up --build",
+    "docker:prod": "docker compose --file docker-compose.prod.yml up --build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -24,6 +25,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
+    "nodemon": "^3.1.10",
     "typescript": "^5"
   }
 }

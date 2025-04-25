@@ -3,11 +3,11 @@ version: '3.8'
 services:
   photo:
     build:
-      dockerfile: Dockerfile.dev # Specify Dockerfile for the photo service in development mode
+      dockerfile: Dockerfile.dev
     image: photo:dev
     volumes:
-      - ./src:/app/src # Assuming src is where your code lives
+      - ./src:/app/src
     environment:
-      - NODE_ENV=development # Set the environment variable for development
+      - NODE_ENV=development
     ports:
       - "4000:4000"
