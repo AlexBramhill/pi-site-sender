@@ -16,10 +16,6 @@ async function visitPage({ targetUrl, width, height }: visitPageProps) {
 
   await page.goto(targetUrl, { waitUntil: "networkidle" });
 
-  page.on("close", async () => {
-    await browser?.close();
-  });
-
   return page;
 }
 

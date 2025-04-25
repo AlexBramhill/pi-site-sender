@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { takeScreenshot } from "./website-interface";
-import { processImage } from "./image-processing";
 
 const app = express();
 const PORT = 4000;
@@ -12,10 +11,9 @@ app.get("/", async (req: Request, res: Response) => {
   const height = parseInt(req.query.height as string) || 720;
 
   const screenshotBuffer = await takeScreenshot({ targetUrl, width, height });
-  const processedImage = await processImage(screenshotBuffer);
 
   res.set("Content-Type", "image/png");
-  res.send(processedImage);
+  res.send(screenshotBuffer);
 });
 
 app.listen(PORT, () => {
