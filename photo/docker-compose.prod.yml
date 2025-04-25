@@ -4,7 +4,7 @@ services:
   photo:
     build:
       dockerfile: Dockerfile.prod
-    image: photo:prod:latest
+    image: photo:latest
     environment:
       - NODE_ENV=production 
     ports:
