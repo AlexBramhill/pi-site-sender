@@ -9,4 +9,4 @@ COPY . /app
 
 EXPOSE 3000
 
-CMD ["nodemon", "--legacy-watch"]
+CMD ["npx", "nodemon", "--legacy-watch"]
