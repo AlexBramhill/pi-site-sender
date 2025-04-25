@@ -2,7 +2,7 @@
   "watch": ["src/**/*"],
   "ext": "ts,tsx,json",
   "ignore": ["dist"],
-  "exec": "next dev --turbopack",
+  "exec": "npm run dev",
   "env": {
     "NODE_ENV": "development"
   }

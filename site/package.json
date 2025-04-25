@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon --legacy-watch",
+    "dev": "next dev --turbopack",
     "docker:dev": "docker compose --file docker-compose.dev.yml up --build",
     "docker:prod": "docker compose --file docker-compose.prod.yml up --build",
     "build": "next build",
