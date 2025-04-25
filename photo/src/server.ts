@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import { Jimp, JimpMime } from "jimp";
 import { takeScreenshot } from "./website-interface";
 import { processImage } from "./image-processing";
 
