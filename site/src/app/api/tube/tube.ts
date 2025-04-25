@@ -16,6 +16,6 @@ export const getLineStatus = async (lineId: string): Promise<LineStatus> => {
   return parseLineStatus(data)[0];
 };
 
-const parseLineStatus = (lineStatus: any): LineStatus[] => {
+const parseLineStatus = (lineStatus: unknown): LineStatus[] => {
   return LineStatusSchema.array().parse(lineStatus);
 };
