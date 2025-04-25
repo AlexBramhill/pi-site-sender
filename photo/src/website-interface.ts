@@ -21,5 +21,5 @@ async function visitPage({ targetUrl, width, height }: visitPageProps) {
 
 export async function takeScreenshot(visitPageProps: visitPageProps) {
   const page = await visitPage(visitPageProps);
-  return page.screenshot({ type: "jpeg" });
+  return page.screenshot({ type: "jpeg", quality: 100 });
 }
