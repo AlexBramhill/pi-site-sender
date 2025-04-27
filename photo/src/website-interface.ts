@@ -2,11 +2,6 @@ import { chromium, Browser } from "playwright";
 import BrowserManager from "./browser-manager";
 import { ScreenshotQuery } from "./schemas/query-schema";
 
-type visitPageProps = {
-  width: number;
-  height: number;
-};
-
 export const takeScreenshot = async (ScreenshotQuery: ScreenshotQuery) => {
   const PORT_REMOTE = 3000;
 
