@@ -1,25 +1,20 @@
 import { chromium, Browser } from "playwright";
+import BrowserManager from "./browser-manager";
+import { ScreenshotQuery } from "./schemas/querySchema";
 
 type visitPageProps = {
-  targetUrl: string;
   width: number;
   height: number;
 };
 
-async function visitPage({ targetUrl, width, height }: visitPageProps) {
-  let browser: Browser | null = null;
-  browser = await chromium.launch();
+export const takeScreenshot = async (ScreenshotQuery: ScreenshotQuery) => {
+  const PORT_REMOTE = 3000;
 
-  const context = await browser.newContext({ viewport: { width, height } });
+  const targetUrl = `http://site:${PORT_REMOTE}`;
 
-  const page = await context.newPage();
+  const browserManager = await BrowserManager.getInstance({
+    initialPageUrl: targetUrl,
+  });
 
-  await page.goto(targetUrl, { waitUntil: "networkidle" });
-
-  return page;
-}
-
-export async function takeScreenshot(visitPageProps: visitPageProps) {
-  const page = await visitPage(visitPageProps);
-  return page.screenshot({ type: "jpeg", quality: 100 });
-}
+  return browserManager.takeScreenshot(ScreenshotQuery);
+};

@@ -1,20 +1,21 @@
 import express, { Request, Response } from "express";
 import { takeScreenshot } from "./website-interface";
+import { validateQuery } from "./middlewares/validateQuery";
+import { ScreenshotQuery, ScreenshotQuerySchema } from "./schemas/querySchema";
 
 const app = express();
 const PORT = 4000;
-const PORT_REMOTE = 3000;
 
-app.get("/", async (req: Request, res: Response) => {
-  const targetUrl = `http://site:${PORT_REMOTE}`;
-  const width = parseInt(req.query.width as string) || 1280;
-  const height = parseInt(req.query.height as string) || 720;
+app.get(
+  "/",
+  validateQuery(ScreenshotQuerySchema),
+  async (req: Request<{}, {}, {}, ScreenshotQuery>, res: Response) => {
+    const screenshotBuffer = await takeScreenshot(req.query);
 
-  const screenshotBuffer = await takeScreenshot({ targetUrl, width, height });
-
-  res.set("Content-Type", "image/jpg");
-  res.send(screenshotBuffer);
-});
+    res.set("Content-Type", "image/jpg");
+    res.send(screenshotBuffer);
+  }
+);
 
 app.listen(PORT, () => {
   console.log(
