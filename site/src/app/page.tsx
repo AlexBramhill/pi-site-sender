@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 import { config } from "./config/config";
-import DigitalClock from "./components/digitalClock";
-import TubeStatusOverlay from "./components/tubeStatus";
+import DigitalClock from "./components/digital-clock";
+import TubeStatusOverlay from "./components/tube-status";
 
 export default async function Home() {
   return (

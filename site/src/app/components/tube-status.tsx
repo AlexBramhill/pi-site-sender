@@ -1,5 +1,5 @@
 "use client";
-import { useTubeStatus } from "../hooks/useTubeStatus";
+import { useTubeStatus } from "../hooks/use-tube-status";
 import styles from "./../page.module.css";
 
 type TubeStatusOverlayProps = {

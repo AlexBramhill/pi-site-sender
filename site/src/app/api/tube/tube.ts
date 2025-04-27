@@ -1,5 +1,5 @@
 import { config } from "@/app/config/config";
-import { LineStatus, LineStatusSchema } from "@/app/schemas/lineStatus";
+import { LineStatus, LineStatusSchema } from "@/app/schemas/line-status";
 
 export const getLineStatus = async (lineId: string): Promise<LineStatus> => {
   const params = new URLSearchParams({ app_key: config.TFL_API_KEY });

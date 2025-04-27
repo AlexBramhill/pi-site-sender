@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import useClock from "../hooks/useClock";
+import useClock from "../hooks/use-clock";
 
 const DigitalClock = () => {
   const [hasMounted, setHasMounted] = useState(false);
