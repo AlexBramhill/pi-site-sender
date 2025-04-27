@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
-import { z, ZodError, ZodSchema } from "zod";
+import { z, ZodSchema } from "zod";
 
 export const validateQuery = <T extends ZodSchema<any>>(
   schema: T
