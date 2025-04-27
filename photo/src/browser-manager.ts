@@ -65,7 +65,7 @@ class BrowserManager {
   ): Promise<Buffer> {
     const page = this.getPage();
 
-    if (ScreenshotQuery) {
+    if (ScreenshotQuery.width && ScreenshotQuery.height) {
       const { width, height } = ScreenshotQuery;
       await page.setViewportSize({ width, height });
     }

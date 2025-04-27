@@ -6,10 +6,14 @@ import { ScreenshotQuery, ScreenshotQuerySchema } from "./schemas/query-schema";
 const app = express();
 const PORT = 4000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get(
   "/",
   validateQuery(ScreenshotQuerySchema),
   async (req: Request<{}, {}, {}, ScreenshotQuery>, res: Response) => {
+    console.log(req.query);
     const screenshotBuffer = await takeScreenshot(req.query);
 
     res.set("Content-Type", "image/jpg");
