@@ -13,7 +13,6 @@ app.get(
   "/",
   validateQuery(ScreenshotQuerySchema),
   async (req: Request<{}, {}, {}, ScreenshotQuery>, res: Response) => {
-    console.log(req.query);
     const screenshotBuffer = await takeScreenshot(req.query);
 
     res.set("Content-Type", "image/jpg");
