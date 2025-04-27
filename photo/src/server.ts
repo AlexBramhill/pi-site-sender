@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { takeScreenshot } from "./website-interface";
-import { validateQuery } from "./middlewares/validateQuery";
-import { ScreenshotQuery, ScreenshotQuerySchema } from "./schemas/querySchema";
+import { validateQuery } from "./middlewares/validate-query";
+import { ScreenshotQuery, ScreenshotQuerySchema } from "./schemas/query-schema";
 
 const app = express();
 const PORT = 4000;

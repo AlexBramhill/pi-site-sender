@@ -1,6 +1,6 @@
 import { chromium, Browser } from "playwright";
 import BrowserManager from "./browser-manager";
-import { ScreenshotQuery } from "./schemas/querySchema";
+import { ScreenshotQuery } from "./schemas/query-schema";
 
 type visitPageProps = {
   width: number;

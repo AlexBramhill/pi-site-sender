@@ -6,7 +6,7 @@ import {
   BrowserContextOptions,
   LaunchOptions,
 } from "playwright";
-import { ScreenshotQuery } from "./schemas/querySchema";
+import { ScreenshotQuery } from "./schemas/query-schema";
 
 class BrowserManager {
   private static instance: BrowserManager | null = null;
