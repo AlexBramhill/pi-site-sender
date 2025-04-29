@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "dev": "docker compose --file docker-compose.dev.yml up --build",
-    "prod": "docker compose --file docker-compose.prod.yml up --build"
-  }
-}
