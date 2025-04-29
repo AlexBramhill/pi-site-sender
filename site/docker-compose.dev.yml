@@ -12,5 +12,7 @@ services:
       - FAST_REFRESH=false
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - .env.dev
     ports:
       - "3000:3000"

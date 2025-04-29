@@ -9,5 +9,7 @@ services:
       - ./src:/app/src
     environment:
       - NODE_ENV=development
+    env_file:
+      - .env.dev
     ports:
       - "4000:4000"

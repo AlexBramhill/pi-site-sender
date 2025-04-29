@@ -7,5 +7,7 @@ services:
     image: photo:latest
     environment:
       - NODE_ENV=production 
+    env_file:
+      - .env
     ports:
       - "4000:4000"
