@@ -1,15 +1,13 @@
-version: '3.8'
-
 services:
   site:
     extends:
-      file: site/docker-compose.dev.yml
+      file: ./site/docker-compose.dev.yml
       service: site
 
   photo:
 
     extends:
-      file: photo/docker-compose.dev.yml
+      file: ./photo/docker-compose.dev.yml
       service: photo
 
 networks:
