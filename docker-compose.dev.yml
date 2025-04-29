@@ -5,7 +5,6 @@ services:
       service: site
 
   photo:
-
     extends:
       file: ./photo/docker-compose.dev.yml
       service: photo

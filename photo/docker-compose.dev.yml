@@ -1,6 +1,7 @@
 services:
   photo:
     build:
+      context: .
       dockerfile: Dockerfile.dev
     image: photo:dev
     volumes:

@@ -1,6 +1,7 @@
 services:
   site:
     build:
+      context: .
       dockerfile: Dockerfile.dev
     image: site:dev
     volumes:
