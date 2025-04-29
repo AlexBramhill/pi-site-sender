@@ -4,8 +4,8 @@ import { z } from "zod";
 // There is also some further fun around the typing of these query params
 export const ScreenshotQuerySchema = z
   .object({
-    width: z.number().optional(),
-    height: z.number().optional(),
+    width: z.number({ coerce: true }).optional(),
+    height: z.number({ coerce: true }).optional(),
   })
   .refine(
     (data) =>
