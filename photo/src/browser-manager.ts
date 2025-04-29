@@ -44,6 +44,7 @@ class BrowserManager {
     this.browser = await chromium.launch(launchOptions);
     this.context = await this.browser.newContext(contextOptions);
     this.page = await this.context.newPage();
+    await this.page.emulateMedia({ colorScheme: "dark" });
   }
 
   public getPage(): Page {
