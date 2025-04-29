@@ -21,17 +21,15 @@ const DigitalClock = () => {
     );
   }
 
-  const formatTime = (value: number) => value.toString().padStart(2, "0");
-
-  const hours = formatTime(time.getHours());
-  const minutes = formatTime(time.getMinutes());
-  const seconds = formatTime(time.getSeconds());
+  const ukTimeString = time.toLocaleTimeString("en-GB", {
+    timeZone: "Europe/London",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <h1 className="">
-        {hours}:{minutes}:{seconds}
-      </h1>
+      <h1 className="">{ukTimeString}</h1>
     </div>
   );
 };
