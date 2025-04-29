@@ -6,7 +6,8 @@ services:
       dockerfile: Dockerfile.prod
     image: photo:latest
     environment:
-      - NODE_ENV=production 
+      - NODE_ENV=production
+      - SITE_URL=http://site:3000
     env_file:
       - .env
     ports:
