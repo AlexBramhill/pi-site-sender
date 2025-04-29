@@ -48,7 +48,5 @@ export function useTubeStatus(lineId: string): UseTubeStatusResult {
     return () => clearInterval(intervalId); // Cleanup on unmount or lineId change
   }, [lineId]);
 
-  console.log({ data });
-
   return { data, loading, error };
 }
