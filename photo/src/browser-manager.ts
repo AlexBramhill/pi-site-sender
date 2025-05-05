@@ -62,16 +62,18 @@ class BrowserManager {
   }
 
   public async takeScreenshot(
-    ScreenshotQuery: ScreenshotQuery
+    screenshotQuery: ScreenshotQuery
   ): Promise<Buffer> {
     const page = this.getPage();
 
-    if (ScreenshotQuery.width && ScreenshotQuery.height) {
-      const { width, height } = ScreenshotQuery;
+    if (screenshotQuery.width && screenshotQuery.height) {
+      const { width, height } = screenshotQuery;
       await page.setViewportSize({ width, height });
     }
 
-    return await page.screenshot({ type: "jpeg", quality: 100 });
+    return (await screenshotQuery.format) === "jpeg"
+      ? this.takeJpegScreenshot(page)
+      : this.takePngScreenshot(page);
   }
 
   public async closeBrowser(): Promise<void> {
@@ -83,6 +85,17 @@ class BrowserManager {
       BrowserManager.instance = null;
     }
   }
+
+  private takePngScreenshot = async (page: Page): Promise<Buffer> =>
+    await page.screenshot({
+      type: "png",
+    });
+
+  private takeJpegScreenshot = async (page: Page): Promise<Buffer> =>
+    await page.screenshot({
+      type: "jpeg",
+      quality: 100,
+    });
 }
 
 export default BrowserManager;

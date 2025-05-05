@@ -6,6 +6,7 @@ export const ScreenshotQuerySchema = z
   .object({
     width: z.number({ coerce: true }).optional(),
     height: z.number({ coerce: true }).optional(),
+    format: z.enum(["jpeg", "png"]).optional().default("png"),
   })
   .refine(
     (data) =>

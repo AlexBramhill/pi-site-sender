@@ -1,4 +1,3 @@
-import { chromium, Browser } from "playwright";
 import BrowserManager from "./browser-manager";
 import { ScreenshotQuery } from "./schemas/query-schema";
 

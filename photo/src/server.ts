@@ -10,7 +10,7 @@ app.get("/", async (req: Request<ScreenshotQuery>, res: Response) => {
 
   const screenshotBuffer = await takeScreenshot(parsedQuery);
 
-  res.set("Content-Type", "image/jpg");
+  res.set("Content-Type", `image/${parsedQuery.format}`);
   res.send(screenshotBuffer);
 });
 
