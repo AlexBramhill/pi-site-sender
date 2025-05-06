@@ -1,4 +1,5 @@
 "use client";
+import { ONE_MINUTE_IN_MS } from "../consts/time";
 import { useTubeStatus } from "../hooks/use-tube-status";
 import styles from "./../page.module.css";
 
@@ -7,9 +8,12 @@ type TubeStatusOverlayProps = {
 };
 
 export default function TubeStatusOverlay({ lineId }: TubeStatusOverlayProps) {
-  const { data: lineStatus, loading, error } = useTubeStatus(lineId);
+  const { lineStatus, isLoading, error } = useTubeStatus({
+    lineId,
+    refreshInMs: ONE_MINUTE_IN_MS,
+  });
 
-  if (loading) return <div className={styles.overlay}>Loading...</div>;
+  if (isLoading) return <div className={styles.overlay}>Loading...</div>;
   if (error) return <div className={styles.overlay}>Error: {error}</div>;
   if (!lineStatus) return <div className={styles.overlay}>No data found</div>;
 
@@ -18,7 +22,7 @@ export default function TubeStatusOverlay({ lineId }: TubeStatusOverlayProps) {
       <h2>{lineStatus.name}</h2>
       {lineStatus.lineStatuses.map(
         (status: {
-          statusSeverity: string;
+          statusSeverity: number;
           statusSeverityDescription: string;
         }) => (
           <span key={status.statusSeverity}>

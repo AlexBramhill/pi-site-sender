@@ -1,25 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useClock from "../hooks/use-clock";
+import { ONE_SECOND_IN_MS } from "../consts/time";
 
 const DigitalClock = () => {
-  const [hasMounted, setHasMounted] = useState(false);
-  const time = useClock();
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  if (!hasMounted) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-black">
-        <h1 className="text-4xl font-mono text-gray-500 animate-pulse">
-          loading...
-        </h1>
-      </div>
-    );
-  }
+  const time = useClock({ refreshInMs: ONE_SECOND_IN_MS });
 
   const ukTimeString = time.toLocaleTimeString("en-GB", {
     timeZone: "Europe/London",

@@ -1,15 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 
-const useClock = () => {
-  const [time, setTime] = useState(new Date());
+export type UseClockProps = {
+  refreshInMs: number;
+};
 
-  useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), 100);
-    return () => clearInterval(interval);
-  }, []);
+const useClock = ({ refreshInMs }: UseClockProps): Date => {
+  const key = `clock-${refreshInMs}`;
 
-  return time;
+  const { data: time } = useSWR<Date>(key, () => new Date(), {
+    refreshInterval: refreshInMs,
+    dedupingInterval: refreshInMs,
+    fallbackData: new Date(),
+  });
+
+  return time ?? new Date();
 };
 
 export default useClock;
