@@ -7,6 +7,7 @@ import {
   LaunchOptions,
 } from "playwright";
 import { ScreenshotQuery } from "./schemas/query-schema";
+const { PNG } = require("pngjs");
 
 class BrowserManager {
   private static instance: BrowserManager | null = null;
@@ -86,16 +87,40 @@ class BrowserManager {
     }
   }
 
-  private takePngScreenshot = async (page: Page): Promise<Buffer> =>
-    await page.screenshot({
+  private takePngScreenshot = async (page: Page): Promise<Buffer> => {
+    const screenshotBuffer = await page.screenshot({
       type: "png",
     });
+
+    return this.convertToOneBit(screenshotBuffer);
+  };
 
   private takeJpegScreenshot = async (page: Page): Promise<Buffer> =>
     await page.screenshot({
       type: "jpeg",
       quality: 100,
     });
+
+  // Hack that needs to be refactored
+  private convertToOneBit(screenshotBuffer: Buffer<ArrayBufferLike>) {
+    const png = PNG.sync.read(screenshotBuffer);
+
+    for (let y = 0; y < png.height; y++) {
+      for (let x = 0; x < png.width; x++) {
+        const idx = (png.width * y + x) << 2;
+        const grayscale =
+          0.3 * png.data[idx] +
+          0.59 * png.data[idx + 1] +
+          0.11 * png.data[idx + 2];
+        const value = grayscale > 128 ? 255 : 0;
+        png.data[idx] = value;
+        png.data[idx + 1] = value;
+        png.data[idx + 2] = value;
+      }
+    }
+
+    return Buffer.from(PNG.sync.write(png));
+  }
 }
 
 export default BrowserManager;
