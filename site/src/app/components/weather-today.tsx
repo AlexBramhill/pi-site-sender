@@ -1,9 +1,10 @@
 "use client";
 import { FIFTEEN_MINUTES_IN_MS } from "../consts/time";
 import useWeather from "../hooks/use-weather";
-import { toStringCelsius } from "../schemas/to-string-celius";
-import { toTwoDigitTime } from "../schemas/to-two-digit-time";
+import { toStringCelsius } from "../converters/to-string-celcius";
+import { toTwoDigitTime } from "../converters/to-two-digit-time";
 import styles from "./../page.module.css";
+import { toPercent } from "../converters/to-percent";
 
 export default function WeatherToday() {
   const { weather, isLoading, error } = useWeather({
@@ -16,13 +17,17 @@ export default function WeatherToday() {
 
   return (
     <div>
-      <h3>{toStringCelsius(weather.current.temperature2m, 0)}</h3>
-      {toStringCelsius(weather.daily.temperature2mMax[0], 0)} |{" "}
-      <b>{toStringCelsius(weather.daily.temperature2mMean[0], 0)}</b> |{" "}
-      {toStringCelsius(weather.daily.temperature2mMin[0])}
+      <h2 style={{ display: "inline", margin: 0 }}>
+        {toStringCelsius(weather.current.temperature2m, 0)}
+      </h2>
+      <p> {toPercent(weather.daily.precipitationProbabilityMean[0])} rain</p>
+      <p>
+        {toStringCelsius(weather.daily.temperature2mMin[0])} |{" "}
+        <b>{toStringCelsius(weather.daily.temperature2mMean[0], 0)}</b> |{" "}
+        {toStringCelsius(weather.daily.temperature2mMax[0], 0)}
+      </p>
       <p>▲ {toTwoDigitTime(weather.daily.sunrise[0])}</p>
       <p>▼ {toTwoDigitTime(weather.daily.sunset[0])}</p>
-      <p></p>
     </div>
   );
 }
