@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { config } from "@/app/config/config";
 import { getWeather } from "./weather";
 
 export async function GET() {
