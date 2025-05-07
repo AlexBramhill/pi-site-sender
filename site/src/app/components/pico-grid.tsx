@@ -2,7 +2,7 @@ export default function PicoGrid({
   children,
   direction = "row",
   wrap = "nowrap",
-  gap = "1rem",
+  gap = "0.5rem",
   style = {},
 }: {
   children: React.ReactNode;

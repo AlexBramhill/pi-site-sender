@@ -18,14 +18,14 @@ export default function WeatherToday() {
   return (
     <div>
       <h2 style={{ display: "inline", margin: 0 }}>
-        {toStringCelsius(weather.current.temperature2m, 0)}
+        {toStringCelsius(weather.current.temperature2m, 0)} (
+        {toStringCelsius(weather.daily.temperature2mMean[0], 0)})
       </h2>
-      <p> {toPercent(weather.daily.precipitationProbabilityMean[0])} rain</p>
       <p>
-        {toStringCelsius(weather.daily.temperature2mMin[0])} |{" "}
-        <b>{toStringCelsius(weather.daily.temperature2mMean[0], 0)}</b> |{" "}
+        {toStringCelsius(weather.daily.temperature2mMin[0])} -{" "}
         {toStringCelsius(weather.daily.temperature2mMax[0], 0)}
       </p>
+      <p> {toPercent(weather.daily.precipitationProbabilityMean[0])} rain</p>
       <p>▲ {toTwoDigitTime(weather.daily.sunrise[0])}</p>
       <p>▼ {toTwoDigitTime(weather.daily.sunset[0])}</p>
     </div>
