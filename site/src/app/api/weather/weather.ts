@@ -25,9 +25,6 @@ export const getWeather = async (): Promise<WeatherDto> => {
   const sunrise = daily.variables(4)!;
   const sunset = daily.variables(5)!;
 
-  console.log({
-    leafWetnessProbabilityMean: daily.variables(45)!.valuesArray()!,
-  });
   // Validate and transform the weather data using WeatherSchema
   const weatherData = WeatherSchema.parse({
     current: {
