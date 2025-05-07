@@ -1,9 +1,9 @@
 "use client";
 import useSWR from "swr";
-import { LineStatus } from "../schemas/line-status";
+import { LineStatus, LineStatusSchema } from "../schemas/line-status";
 
 type UseTubeStatusResult = {
-  lineStatus: LineStatus | null;
+  lineStatus: LineStatus | undefined;
   isLoading: boolean;
   error: string | null;
 };
@@ -16,7 +16,7 @@ type UseTubeStatusProps = {
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch line status");
-  return res.json();
+  return LineStatusSchema.parse(await res.json());
 };
 
 export function useTubeStatus({
@@ -30,7 +30,7 @@ export function useTubeStatus({
   );
 
   return {
-    lineStatus: data || null,
+    lineStatus: data,
     isLoading: isLoading,
     error: error ? error.message : null,
   };

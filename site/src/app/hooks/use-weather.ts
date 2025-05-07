@@ -1,33 +1,33 @@
-"use-client";
+"use client";
 import useSWR from "swr";
+import { Weather, WeatherDtoSchema } from "../schemas/weather";
 
 type UseWeatherProps = {
   refreshInMs: number;
 };
 
 type UseWeatherResult = {
-  weather: Date;
+  weather: Weather | undefined;
   isLoading: boolean;
   error: string | null;
 };
+
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch weather data");
-  return res.json();
+  return WeatherDtoSchema.parse(await res.json());
 };
 
-const useWeather = ({ refreshInMs }: UseWeatherProps): UseWeatherResult => {
-  const {
-    data: weather,
-    error,
-    isLoading,
-  } = useSWR("/api/weather", fetcher, { refreshInterval: refreshInMs });
+export default function useWeather({
+  refreshInMs,
+}: UseWeatherProps): UseWeatherResult {
+  const { data, error, isLoading } = useSWR("/api/weather", fetcher, {
+    refreshInterval: refreshInMs,
+  });
 
   return {
-    weather,
+    weather: data?.weatherData ?? undefined,
     isLoading,
     error: error ? error.message : null,
   };
-};
-
-export default useWeather;
+}

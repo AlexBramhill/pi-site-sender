@@ -1,10 +1,11 @@
 import { fetchWeatherApi } from "openmeteo";
 import { params } from "./weather-params";
+import { WeatherDto, WeatherSchema } from "@/app/schemas/weather";
 /**
  * The below is from the Open Meteo API documentation
  */
 
-export const getWeather = async () => {
+export const getWeather = async (): Promise<WeatherDto> => {
   const url = "https://api.open-meteo.com/v1/forecast";
   const responses = await fetchWeatherApi(url, params);
 
@@ -24,8 +25,11 @@ export const getWeather = async () => {
   const sunrise = daily.variables(4)!;
   const sunset = daily.variables(5)!;
 
-  // Note: The order of weather variables in the URL query and the indices below need to match!
-  const weatherData = {
+  console.log({
+    leafWetnessProbabilityMean: daily.variables(45)!.valuesArray()!,
+  });
+  // Validate and transform the weather data using WeatherSchema
+  const weatherData = WeatherSchema.parse({
     current: {
       time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
       isDay: current.variables(0)!.value(),
@@ -124,7 +128,7 @@ export const getWeather = async () => {
       visibilityMax: daily.variables(59)!.valuesArray()!,
       visibilityMin: daily.variables(60)!.valuesArray()!,
     },
-  };
+  });
 
   return {
     weatherData,
