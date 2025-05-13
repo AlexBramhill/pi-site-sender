@@ -13,21 +13,13 @@ import db from "./database_init";
 import { ZodType } from "zod";
 
 export class Datastore<T> {
-  private readonly tableName: TableName;
   private readonly modelSchema: ZodType<SuccessModel<T>>;
 
-  constructor({
-    tableName,
-    schema,
-  }: {
-    tableName: TableName;
-    schema: ZodType<T>;
-  }) {
-    this.tableName = tableName;
+  constructor(private readonly tableName: TableName, schema: ZodType<T>) {
     this.modelSchema = GetSuccessModelSchema(schema);
   }
 
-  save = (dataModel: SuccessModel<T>) => {
+  save = (dataModel: Model<T>) => {
     const sqlData = ModelToSqlTransformer.parse(dataModel);
     const saveData = db.prepare(
       `INSERT INTO ${this.tableName} (fetched_at, is_success, data, error) VALUES (?, ?, ?, ?)`
@@ -40,7 +32,7 @@ export class Datastore<T> {
     );
   };
 
-  getLatest = (): Model<T> => {
+  getLatest = (): Model<T> | null => {
     const getLatestTubeData = db.prepare(`
       SELECT * FROM ${this.tableName} ORDER BY last_fetched DESC LIMIT 1
     `);
@@ -48,7 +40,7 @@ export class Datastore<T> {
     const row = getLatestTubeData.get();
 
     if (!row) {
-      throw new Error(`No data found in table ${this.tableName}`);
+      return null;
     }
 
     const parsedRow = SqlToModelTransformer.parse(row);
@@ -60,31 +52,25 @@ export class Datastore<T> {
     return this.modelSchema.parse(parsedRow);
   };
 
-  getLatestSuccess = (): SuccessModel<T> => {
+  getLatestSuccess = (): SuccessModel<T> | null => {
     const getLatestTubeData = db.prepare(`
       SELECT * FROM ${this.tableName} WHERE is_success = 1 ORDER BY last_fetched DESC LIMIT 1
     `);
 
     const row = getLatestTubeData.get();
 
-    if (!row) {
-      throw new Error("No successful tube data found");
-    }
-
-    return this.modelSchema.parse(SqlToModelTransformer.parse(row));
+    return row
+      ? this.modelSchema.parse(SqlToModelTransformer.parse(row))
+      : null;
   };
 
-  getLatestFailure = (): FailureModel => {
+  getLatestFailure = (): FailureModel | null => {
     const getLatestTubeData = db.prepare(`
       SELECT * FROM ${this.tableName} WHERE is_success = 0 ORDER BY last_fetched DESC LIMIT 1
     `);
 
     const row = getLatestTubeData.get();
 
-    if (!row) {
-      throw new Error("No successful tube data found");
-    }
-
-    return SqlToModelTransformer.parse(row) as FailureModel;
+    return row ? (SqlToModelTransformer.parse(row) as FailureModel) : null;
   };
 }

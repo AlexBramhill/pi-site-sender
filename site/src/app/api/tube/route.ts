@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import { getLineStatus } from "./tube";
-import { config } from "@/app/config/config";
+import { tubeDataRetriever } from "@/app/services/data-retrievers";
 
 export async function GET() {
   try {
-    const status = await getLineStatus(config.HOME_TUBE_LINE_NAME);
+    const status = await tubeDataRetriever.getData();
     return NextResponse.json(status);
   } catch (error) {
     console.error("Error fetching line status:", error);

@@ -23,9 +23,14 @@ const getLimitOnEntriesSql = (tableName: string) => `
     END;
 `;
 
-TABLE_NAMES.forEach((tableName) => {
-  db.exec(getNewTableSql(tableName));
-  db.exec(getLimitOnEntriesSql(tableName));
-});
+const initDatabase = () => {
+  console.log("Initializing database...");
+  TABLE_NAMES.forEach((tableName) => {
+    db.exec(getNewTableSql(tableName));
+    db.exec(getLimitOnEntriesSql(tableName));
+  });
+};
+
+initDatabase();
 
 export default db;
