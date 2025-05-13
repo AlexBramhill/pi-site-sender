@@ -113,7 +113,7 @@ export const WeatherLocationSchema = z.object({
   utcOffsetSeconds: z.number(),
 });
 
-export const WeatherDtoSchema = z.object({
+export const WeatherSummarySchema = z.object({
   location: WeatherLocationSchema,
   weatherData: WeatherSchema,
 });
@@ -126,4 +126,4 @@ export type Weather = z.infer<typeof WeatherSchema>;
 
 export type WeatherLocation = z.infer<typeof WeatherLocationSchema>;
 
-export type WeatherDto = z.infer<typeof WeatherDtoSchema>;
+export type WeatherSummary = z.infer<typeof WeatherSummarySchema>;

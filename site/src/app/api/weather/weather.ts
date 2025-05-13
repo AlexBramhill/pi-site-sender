@@ -1,11 +1,11 @@
 import { fetchWeatherApi } from "openmeteo";
 import { params } from "./weather-params";
-import { WeatherDto, WeatherSchema } from "@/app/schemas/weather";
+import { WeatherSummary, WeatherSchema } from "@/app/schemas/weather";
 /**
  * The below is from the Open Meteo API documentation
  */
 
-export const getWeather = async (): Promise<WeatherDto> => {
+export const getWeather = async (): Promise<WeatherSummary> => {
   const url = "https://api.open-meteo.com/v1/forecast";
   const responses = await fetchWeatherApi(url, params);
 

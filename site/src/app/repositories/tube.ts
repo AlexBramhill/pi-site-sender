@@ -1,51 +1,13 @@
-import {
-  LineStatusFailureModel,
-  LineStatusFailureModelSchema,
-  LineStatusSuccessModel,
-  LineStatusSuccessModelSchema,
-} from "../schemas/line-status";
-import db from "./database";
+import { LineStatusSchema } from "../schemas/line-status";
+import { WeatherSummarySchema } from "../schemas/weather";
+import { Datastore as DataStore } from "./data-store";
 
-// Can be abstracted
-export const saveTubeStatus = async (
-  data: LineStatusSuccessModel | LineStatusFailureModel
-) => {
-  const { fetchedAt, isSuccess } = data;
-  const lineStatus = isSuccess ? JSON.stringify(data.lineStatus) : null;
-  const saveTubeData = db.prepare(
-    `INSERT INTO tube (last_fetched, is_success, lineStatus) VALUES (?, ?, ?)`
-  );
+export const tubeDataStore = new DataStore({
+  tableName: "tube",
+  schema: LineStatusSchema,
+});
 
-  saveTubeData.run(fetchedAt, isSuccess, lineStatus);
-};
-
-export function getLatestTubeData() {
-  const getLatestTubeData = db.prepare(`
-      SELECT * FROM tube ORDER BY last_fetched DESC LIMIT 1
-    `);
-  return getLatestTubeData.get();
-}
-
-export const getLatestSuccessfulTubeData = (): LineStatusSuccessModel => {
-  const getLatestTubeData = db.prepare(`
-      SELECT * FROM tube WHERE is_success = 1 ORDER BY last_fetched DESC LIMIT 1
-    `);
-
-  if (!getLatestTubeData) {
-    throw new Error("No successful tube data found");
-  }
-
-  return LineStatusSuccessModelSchema.parse(getLatestTubeData.get());
-};
-
-export const getLatestFailedTubeData = (): LineStatusFailureModel => {
-  const getLatestTubeData = db.prepare(`
-      SELECT * FROM tube WHERE is_success = 0 ORDER BY last_fetched DESC LIMIT 1
-    `);
-
-  if (!getLatestTubeData) {
-    throw new Error("No failed tube data found");
-  }
-
-  return LineStatusFailureModelSchema.parse(getLatestTubeData.get());
-};
+export const weatherDataStore = new DataStore({
+  tableName: "weather",
+  schema: WeatherSummarySchema,
+});
