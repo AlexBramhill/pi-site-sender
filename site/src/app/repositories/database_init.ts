@@ -9,7 +9,8 @@ const getNewTableSql = (tableName: string) => `
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         is_success INTEGER NOT NULL,
         fetched_at DATE NOT NULL,
-        data TEXT NULL
+        data TEXT NULL,
+        error TEXT NULL
     );
 `;
 

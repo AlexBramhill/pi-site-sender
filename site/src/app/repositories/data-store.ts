@@ -34,7 +34,7 @@ export class Datastore<T> {
 
   getLatest = (): Model<T> | null => {
     const getLatestTubeData = db.prepare(`
-      SELECT * FROM ${this.tableName} ORDER BY last_fetched DESC LIMIT 1
+      SELECT * FROM ${this.tableName} ORDER BY fetched_at DESC LIMIT 1
     `);
 
     const row = getLatestTubeData.get();
@@ -54,7 +54,7 @@ export class Datastore<T> {
 
   getLatestSuccess = (): SuccessModel<T> | null => {
     const getLatestTubeData = db.prepare(`
-      SELECT * FROM ${this.tableName} WHERE is_success = 1 ORDER BY last_fetched DESC LIMIT 1
+      SELECT * FROM ${this.tableName} WHERE is_success = 1 ORDER BY fetched_at DESC LIMIT 1
     `);
 
     const row = getLatestTubeData.get();
@@ -66,7 +66,7 @@ export class Datastore<T> {
 
   getLatestFailure = (): FailureModel | null => {
     const getLatestTubeData = db.prepare(`
-      SELECT * FROM ${this.tableName} WHERE is_success = 0 ORDER BY last_fetched DESC LIMIT 1
+      SELECT * FROM ${this.tableName} WHERE is_success = 0 ORDER BY fetched_at DESC LIMIT 1
     `);
 
     const row = getLatestTubeData.get();
