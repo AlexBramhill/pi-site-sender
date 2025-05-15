@@ -38,7 +38,7 @@ const getFetcher = <T>(schema: ZodType<T>) => {
       if (error instanceof ZodError) {
         return {
           fetchedAt: new Date(),
-          isSuccess: false,
+          isSuccess: false as const,
           error: "Parsing DTO failed",
         };
       }
@@ -46,14 +46,14 @@ const getFetcher = <T>(schema: ZodType<T>) => {
       if (error instanceof Error) {
         return {
           fetchedAt: new Date(),
-          isSuccess: false,
+          isSuccess: false as const,
           error: error.message,
         };
       }
 
       return {
         fetchedAt: new Date(),
-        isSuccess: false,
+        isSuccess: false as const,
         error: String(error),
       };
     }
