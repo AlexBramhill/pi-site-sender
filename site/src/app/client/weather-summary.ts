@@ -1,5 +1,5 @@
 import { fetchWeatherApi } from "openmeteo";
-import { params } from "./weather-params";
+import { params } from "./weather-summary-params";
 import {
   WeatherSummaryClientResponse,
   WeatherSchema,

@@ -1,5 +1,5 @@
 import { getLineStatus } from "../client/tube";
-import { getWeatherSummary } from "../client/weather";
+import { getWeatherSummary } from "../client/weather-summary";
 import { config } from "../config/config";
 import { ONE_MINUTE_IN_MS } from "../consts/time";
 import { tubeDataStore, weatherDataStore } from "../repositories/data-stores";

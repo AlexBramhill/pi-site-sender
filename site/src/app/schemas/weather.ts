@@ -25,80 +25,82 @@ export const WeatherCurrentSchema = z.object({
   surfacePressure: z.number(),
 });
 
-const toNumberArray = z
-  .any()
-  .transform((val) => Array.from(val)) // Convert iterable/array-like to array
-  .pipe(
-    z.array(
-      z.any().transform((val) => {
-        const coerced = Number(val);
-        return isNaN(coerced) ? NaN : coerced;
-      })
-    )
-  );
+const float32ArrayToNumberArray = z
+  .custom<Float32Array | number[]>(
+    (val) => Array.isArray(val) || val instanceof Float32Array,
+    {
+      message: "Expected a Float32Array or number[]",
+    }
+  )
+  .transform((val) => {
+    if (Array.isArray(val)) {
+      return val as number[];
+    }
+    return Array.from(val as Float32Array);
+  });
 
 export const WeatherDailySchema = z.object({
   time: z.array(z.coerce.date()),
-  temperature2mMin: toNumberArray,
-  temperature2mMax: toNumberArray,
-  windGusts10mMax: toNumberArray,
-  windSpeed10mMax: toNumberArray,
+  temperature2mMin: float32ArrayToNumberArray,
+  temperature2mMax: float32ArrayToNumberArray,
+  windGusts10mMax: float32ArrayToNumberArray,
+  windSpeed10mMax: float32ArrayToNumberArray,
   sunrise: z.array(z.coerce.date()),
   sunset: z.array(z.coerce.date()),
-  uvIndexMax: toNumberArray,
-  precipitationProbabilityMax: toNumberArray,
-  temperature2mMean: toNumberArray,
-  precipitationProbabilityMean: toNumberArray,
-  windSpeed10mMean: toNumberArray,
-  windGusts10mMean: toNumberArray,
-  windGusts10mMin: toNumberArray,
-  windSpeed10mMin: toNumberArray,
-  precipitationHours: toNumberArray,
-  precipitationSum: toNumberArray,
-  winddirection10mDominant: toNumberArray,
-  apparentTemperatureMin: toNumberArray,
-  apparentTemperatureMax: toNumberArray,
-  windDirection10mDominant: toNumberArray,
-  weatherCode: toNumberArray,
-  shortwaveRadiationSum: toNumberArray,
-  et0FaoEvapotranspiration: toNumberArray,
-  daylightDuration: toNumberArray,
-  sunshineDuration: toNumberArray,
-  uvIndexClearSkyMax: toNumberArray,
-  rainSum: toNumberArray,
-  showersSum: toNumberArray,
-  snowfallSum: toNumberArray,
-  apparentTemperatureMean: toNumberArray,
-  capeMax: toNumberArray,
-  capeMean: toNumberArray,
-  capeMin: toNumberArray,
-  cloudCoverMean: toNumberArray,
-  cloudCoverMax: toNumberArray,
-  cloudCoverMin: toNumberArray,
-  dewPoint2mMean: toNumberArray,
-  dewPoint2mMax: toNumberArray,
-  dewPoint2mMin: toNumberArray,
-  wetBulbTemperature2mMean: toNumberArray,
-  wetBulbTemperature2mMax: toNumberArray,
-  wetBulbTemperature2mMin: toNumberArray,
-  vapourPressureDeficitMax: toNumberArray,
-  growingDegreeDaysBase0Limit50: toNumberArray,
-  leafWetnessProbabilityMean: toNumberArray,
-  relativeHumidity2mMean: toNumberArray,
-  precipitationProbabilityMin: toNumberArray,
-  relativeHumidity2mMax: toNumberArray,
-  snowfallWaterEquivalentSum: toNumberArray,
-  relativeHumidity2mMin: toNumberArray,
-  pressureMslMean: toNumberArray,
-  pressureMslMax: toNumberArray,
-  pressureMslMin: toNumberArray,
-  surfacePressureMean: toNumberArray,
-  surfacePressureMax: toNumberArray,
-  surfacePressureMin: toNumberArray,
-  updraftMax: toNumberArray,
-  visibilityMean: toNumberArray,
-  visibilityMax: toNumberArray,
-  visibilityMin: toNumberArray,
+  uvIndexMax: float32ArrayToNumberArray,
+  precipitationProbabilityMax: float32ArrayToNumberArray,
+  temperature2mMean: float32ArrayToNumberArray,
+  precipitationProbabilityMean: float32ArrayToNumberArray,
+  windSpeed10mMean: float32ArrayToNumberArray,
+  windGusts10mMean: float32ArrayToNumberArray,
+  windGusts10mMin: float32ArrayToNumberArray,
+  windSpeed10mMin: float32ArrayToNumberArray,
+  precipitationHours: float32ArrayToNumberArray,
+  precipitationSum: float32ArrayToNumberArray,
+  winddirection10mDominant: float32ArrayToNumberArray,
+  apparentTemperatureMin: float32ArrayToNumberArray,
+  apparentTemperatureMax: float32ArrayToNumberArray,
+  windDirection10mDominant: float32ArrayToNumberArray,
+  weatherCode: float32ArrayToNumberArray,
+  shortwaveRadiationSum: float32ArrayToNumberArray,
+  et0FaoEvapotranspiration: float32ArrayToNumberArray,
+  daylightDuration: float32ArrayToNumberArray,
+  sunshineDuration: float32ArrayToNumberArray,
+  uvIndexClearSkyMax: float32ArrayToNumberArray,
+  rainSum: float32ArrayToNumberArray,
+  showersSum: float32ArrayToNumberArray,
+  snowfallSum: float32ArrayToNumberArray,
+  apparentTemperatureMean: float32ArrayToNumberArray,
+  capeMax: float32ArrayToNumberArray,
+  capeMean: float32ArrayToNumberArray,
+  capeMin: float32ArrayToNumberArray,
+  cloudCoverMean: float32ArrayToNumberArray,
+  cloudCoverMax: float32ArrayToNumberArray,
+  cloudCoverMin: float32ArrayToNumberArray,
+  dewPoint2mMean: float32ArrayToNumberArray,
+  dewPoint2mMax: float32ArrayToNumberArray,
+  dewPoint2mMin: float32ArrayToNumberArray,
+  wetBulbTemperature2mMean: float32ArrayToNumberArray,
+  wetBulbTemperature2mMax: float32ArrayToNumberArray,
+  wetBulbTemperature2mMin: float32ArrayToNumberArray,
+  vapourPressureDeficitMax: float32ArrayToNumberArray,
+  growingDegreeDaysBase0Limit50: float32ArrayToNumberArray,
+  leafWetnessProbabilityMean: float32ArrayToNumberArray,
+  relativeHumidity2mMean: float32ArrayToNumberArray,
+  precipitationProbabilityMin: float32ArrayToNumberArray,
+  relativeHumidity2mMax: float32ArrayToNumberArray,
+  snowfallWaterEquivalentSum: float32ArrayToNumberArray,
+  relativeHumidity2mMin: float32ArrayToNumberArray,
+  pressureMslMean: float32ArrayToNumberArray,
+  pressureMslMax: float32ArrayToNumberArray,
+  pressureMslMin: float32ArrayToNumberArray,
+  surfacePressureMean: float32ArrayToNumberArray,
+  surfacePressureMax: float32ArrayToNumberArray,
+  surfacePressureMin: float32ArrayToNumberArray,
+  updraftMax: float32ArrayToNumberArray,
+  visibilityMean: float32ArrayToNumberArray,
+  visibilityMax: float32ArrayToNumberArray,
+  visibilityMin: float32ArrayToNumberArray,
 });
 
 export const WeatherSchema = z.object({
