@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FailureDtoSchema, GetSuccessDtoSchema } from "./Dto";
+import { FailureDtoSchema, getSuccessDtoSchema } from "./Dto";
 
 /**
  * This is a horrible zod schema to change metroapi weather data to a more usable format
@@ -119,7 +119,7 @@ export const WeatherSummaryClientResponseSchema = z.object({
   weatherData: WeatherSchema,
 });
 
-export const WeatherDtoSuccessSchema = GetSuccessDtoSchema(
+export const WeatherDtoSuccessSchema = getSuccessDtoSchema(
   WeatherSummaryClientResponseSchema
 );
 

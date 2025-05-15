@@ -1,6 +1,6 @@
 import {
   FailureDto,
-  GetSuccessDtoSchema,
+  getSuccessDtoSchema,
   Dto,
   SuccessDto,
 } from "../schemas/Dto";
@@ -16,7 +16,7 @@ export class Datastore<T> {
   private readonly modelSchema: ZodType<SuccessDto<T>>;
 
   constructor(private readonly tableName: TableName, schema: ZodType<T>) {
-    this.modelSchema = GetSuccessDtoSchema(schema);
+    this.modelSchema = getSuccessDtoSchema(schema);
   }
 
   save = (dataModel: Dto<T>) => {
