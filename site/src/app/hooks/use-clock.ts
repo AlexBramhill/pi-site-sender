@@ -1,11 +1,10 @@
 "use client";
 import useSWR from "swr";
+import { ONE_SECOND_IN_MS } from "../consts/time";
 
-export type UseClockProps = {
-  refreshInMs: number;
-};
+const useClock = (): Date => {
+  const refreshInMs = ONE_SECOND_IN_MS;
 
-const useClock = ({ refreshInMs }: UseClockProps): Date => {
   const key = `clock-${refreshInMs}`;
 
   const { data: time } = useSWR<Date>(key, () => new Date(), {

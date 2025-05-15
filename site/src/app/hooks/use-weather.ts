@@ -1,7 +1,5 @@
 "use client";
-import useSWR from "swr";
 import {
-  Weather,
   WeatherSummaryClientResponseSchema,
 } from "../schemas/weather";
 import { useApi } from "./use-api";

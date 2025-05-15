@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import { assertDto, Dto, FailureDto, parseDto } from "../schemas/Dto";
+import { Dto, parseDto } from "../schemas/Dto";
 import { ZodError, ZodType } from "zod";
 import { ApiUrl } from "../converters/to-api-url";
 import { ONE_MINUTE_IN_MS } from "../consts/time";
@@ -72,6 +72,6 @@ export function useApi<T>({
 
   return {
     isLoading,
-    dto: dto,
+    dto,
   };
 }
