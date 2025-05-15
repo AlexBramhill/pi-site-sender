@@ -5,10 +5,11 @@ import {
   WeatherSummaryClientResponseSchema,
 } from "../schemas/weather";
 import { useApi } from "./use-api";
+import { toApiUrl } from "../converters/to-api-url";
 
-const useWeather = () => () =>
+const useWeather = () =>
   useApi({
-    apiUrl: "/weather",
+    apiUrl: toApiUrl("/weather"),
     schema: WeatherSummaryClientResponseSchema,
   });
 

@@ -1,9 +1,8 @@
 import { z, ZodType } from "zod";
-import { LineStatusClientResponseSchema } from "./line-status";
 
 const BaseDtoSchema = z.object({
-  fetchedAt: z.date(),
-  isSuccess: z.boolean(),
+  fetchedAt: z.date({ coerce: true }),
+  isSuccess: z.boolean({ coerce: true }),
 });
 
 export const FailureDtoSchema = BaseDtoSchema.extend({
@@ -32,11 +31,15 @@ export const getSuccessDtoSchema = <T>(
     data: schema,
   }) as ZodType<SuccessDto<T>>;
 
-export function assertDto<T>(
-  schema: ZodType<T>,
-  dto: unknown
-): asserts dto is Dto<T> {
+export const parseDto = <T>(schema: ZodType<T>, dto: unknown): Dto<T> => {
   const successDtoSchema = getSuccessDtoSchema(schema);
   const testSchema = z.union([successDtoSchema, FailureDtoSchema]);
-  testSchema.parse(dto);
-}
+  return testSchema.parse(dto);
+};
+
+export const assertDto = <T>(
+  schema: ZodType<T>,
+  dto: unknown
+): asserts dto is Dto<T> => {
+  parseDto(schema, dto);
+};

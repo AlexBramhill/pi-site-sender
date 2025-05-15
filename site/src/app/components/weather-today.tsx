@@ -5,29 +5,38 @@ import { toStringCelsius } from "../converters/to-string-celcius";
 import { toTwoDigitTime } from "../converters/to-two-digit-time";
 import styles from "./../page.module.css";
 import { toPercent } from "../converters/to-percent";
+import ApiStatusWrapper from "./api-status-wrapper";
 
 export default function WeatherToday() {
-  const { weather, isLoading, error } = useWeather({
-    refreshInMs: FIFTEEN_MINUTES_IN_MS,
-  });
-
-  if (isLoading) return <div className={styles.overlay}>Loading...</div>;
-  if (error) return <div className={styles.overlay}>Error: {error}</div>;
-  if (!weather) return <div className={styles.overlay}>No data found</div>;
+  const apiResult = useWeather();
 
   return (
-    <div>
-      <h2 style={{ display: "inline", margin: 0 }}>
-        {toStringCelsius(weather.current.temperature2m, 0)} (
-        {toStringCelsius(weather.daily.temperature2mMean[0], 0)})
-      </h2>
-      <p>
-        {toStringCelsius(weather.daily.temperature2mMin[0])} -{" "}
-        {toStringCelsius(weather.daily.temperature2mMax[0], 0)}
-      </p>
-      <p> {toPercent(weather.daily.precipitationProbabilityMean[0])} rain</p>
-      <p>▲ {toTwoDigitTime(weather.daily.sunrise[0])}</p>
-      <p>▼ {toTwoDigitTime(weather.daily.sunset[0])}</p>
-    </div>
+    <ApiStatusWrapper apiResult={apiResult}>
+      {(dto) => (
+        <div>
+          <h2 style={{ display: "inline", margin: 0 }}>
+            {toStringCelsius(dto.data.weatherData.current.temperature2m, 0)} (
+            {toStringCelsius(
+              dto.data.weatherData.daily.temperature2mMean[0],
+              0
+            )}
+            )
+          </h2>
+          <p>
+            {toStringCelsius(dto.data.weatherData.daily.temperature2mMin[0])} -{" "}
+            {toStringCelsius(dto.data.weatherData.daily.temperature2mMax[0], 0)}
+          </p>
+          <p>
+            {" "}
+            {toPercent(
+              dto.data.weatherData.daily.precipitationProbabilityMean[0]
+            )}{" "}
+            rain
+          </p>
+          <p>▲ {toTwoDigitTime(dto.data.weatherData.daily.sunrise[0])}</p>
+          <p>▼ {toTwoDigitTime(dto.data.weatherData.daily.sunset[0])}</p>
+        </div>
+      )}
+    </ApiStatusWrapper>
   );
 }

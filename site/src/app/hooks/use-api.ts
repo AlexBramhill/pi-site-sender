@@ -1,11 +1,11 @@
 "use client";
 import useSWR from "swr";
-import { assertDto, Dto, FailureDto } from "../schemas/Dto";
+import { assertDto, Dto, FailureDto, parseDto } from "../schemas/Dto";
 import { ZodError, ZodType } from "zod";
 import { ApiUrl } from "../converters/to-api-url";
 import { ONE_MINUTE_IN_MS } from "../consts/time";
 
-type UseApiResult<T> = {
+export type UseApiResult<T> = {
   isLoading: boolean;
   dto?: Dto<T>;
 };
@@ -30,11 +30,12 @@ const getFetcher = <T>(schema: ZodType<T>) => {
 
       const json = await res.json();
       console.log("Fetched data:", json);
-      assertDto(schema, json);
+      const parsedDto = parseDto(schema, json);
 
-      return json;
+      return parsedDto;
     } catch (error) {
       console.error("Error fetching data:", error);
+
       if (error instanceof ZodError) {
         return {
           fetchedAt: new Date(),

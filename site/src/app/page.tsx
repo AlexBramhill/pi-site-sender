@@ -1,5 +1,4 @@
 import styles from "./page.module.css";
-import { config } from "./config/config";
 import DigitalClock from "./components/digital-clock";
 import TubeStatusOverlay from "./components/tube-status";
 import PicoGrid from "./components/pico-grid";
@@ -11,7 +10,7 @@ export default async function Home() {
       <main className={styles.main}>
         <PicoGrid>
           <DigitalClock />
-          <TubeStatusOverlay lineId={config.HOME_TUBE_LINE_NAME} />
+          <TubeStatusOverlay />
           <WeatherToday />
         </PicoGrid>
       </main>

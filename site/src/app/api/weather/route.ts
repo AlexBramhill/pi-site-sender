@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { getWeatherSummary } from "../../client/weather";
+import { weatherDataRetriever } from "@/app/services/data-retrievers";
 
 export async function GET() {
   try {
-    const status = await getWeatherSummary();
+    const status = await weatherDataRetriever.getData();
     return NextResponse.json(status);
   } catch (error) {
     console.error("Error fetching weather:", error);
