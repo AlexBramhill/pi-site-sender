@@ -3,8 +3,6 @@ import { getWeatherSummary } from "../client/weather";
 import { config } from "../config/config";
 import { FIFTEEN_MINUTES_IN_MS } from "../consts/time";
 import { tubeDataStore, weatherDataStore } from "../repositories/data-stores";
-import { LineStatusSchema } from "../schemas/line-status";
-import { WeatherSummarySchema } from "../schemas/weather";
 import { DataRetrieverService } from "./data-retriever";
 
 export const tubeDataRetriever = new DataRetrieverService(

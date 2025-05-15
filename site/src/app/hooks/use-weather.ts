@@ -1,6 +1,9 @@
 "use client";
 import useSWR from "swr";
-import { Weather, WeatherSummarySchema } from "../schemas/weather";
+import {
+  Weather,
+  WeatherSummaryClientResponseSchema,
+} from "../schemas/weather";
 
 type UseWeatherProps = {
   refreshInMs: number;
@@ -15,7 +18,7 @@ type UseWeatherResult = {
 const fetcher = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch weather data");
-  return WeatherSummarySchema.parse(await res.json());
+  return WeatherSummaryClientResponseSchema.parse(await res.json());
 };
 
 export default function useWeather({

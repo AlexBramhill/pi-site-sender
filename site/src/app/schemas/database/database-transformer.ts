@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ModelSchema } from "./database-model";
+import { DtoSchema } from "../Dto";
 import { SqlRawSchema } from "./sql-raw";
 
 export const SqlToModelTransformer = SqlRawSchema.transform((row) => {
@@ -21,9 +21,9 @@ export const SqlToModelTransformer = SqlRawSchema.transform((row) => {
       error: row.error ?? "Unknown error",
     };
   }
-}).pipe(ModelSchema);
+}).pipe(DtoSchema);
 
-export const ModelToSqlTransformer = ModelSchema.transform((model) => {
+export const DtoToSqlTransformer = DtoSchema.transform((model) => {
   return {
     fetched_at: model.fetchedAt.toISOString(),
     is_success: model.isSuccess ? 0 : 1,

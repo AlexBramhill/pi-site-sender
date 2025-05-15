@@ -1,11 +1,7 @@
 import { ZodType } from "zod";
 import { FIFTEEN_MINUTES_IN_MS } from "../consts/time";
 import { Datastore } from "../repositories/data-store";
-import {
-  FailureModel,
-  Model,
-  SuccessModel,
-} from "../schemas/database/database-model";
+import { FailureDto, Dto, SuccessDto } from "../schemas/Dto";
 
 export class DataRetrieverService<T> {
   constructor(
@@ -15,7 +11,7 @@ export class DataRetrieverService<T> {
     private readonly makeClientRequest: () => Promise<T>
   ) {}
 
-  async getData(): Promise<Model<T> | null> {
+  async getData(): Promise<Dto<T> | null> {
     const now = new Date();
     const debounceTimeForSuccess = new Date(
       now.getTime() - this.debounceTimeForSuccess
@@ -40,7 +36,7 @@ export class DataRetrieverService<T> {
     try {
       const newData = await this.makeClientRequest();
 
-      const newModel: SuccessModel<T> = {
+      const newModel: SuccessDto<T> = {
         fetchedAt: now,
         data: newData,
         isSuccess: true,
@@ -50,7 +46,7 @@ export class DataRetrieverService<T> {
 
       return newModel;
     } catch (error) {
-      const errorModel: FailureModel = {
+      const errorModel: FailureDto = {
         fetchedAt: now,
         isSuccess: false,
         error: String(error),

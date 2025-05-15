@@ -1,8 +1,12 @@
 import { config } from "@/app/config/config";
-import { LineStatus, LineStatusSchema } from "@/app/schemas/line-status";
+import {
+  LineStatusClientResponse,
+  LineStatusClientResponseSchema,
+} from "@/app/schemas/line-status";
 
-export const getLineStatus = async (lineId: string): Promise<LineStatus> => {
-  
+export const getLineStatus = async (
+  lineId: string
+): Promise<LineStatusClientResponse> => {
   const params = new URLSearchParams({ app_key: config.TFL_API_KEY });
 
   const response = await fetch(
@@ -17,6 +21,6 @@ export const getLineStatus = async (lineId: string): Promise<LineStatus> => {
   return parseLineStatus(data)[0];
 };
 
-const parseLineStatus = (lineStatus: unknown): LineStatus[] => {
-  return LineStatusSchema.array().parse(lineStatus);
+const parseLineStatus = (lineStatus: unknown): LineStatusClientResponse[] => {
+  return LineStatusClientResponseSchema.array().parse(lineStatus);
 };

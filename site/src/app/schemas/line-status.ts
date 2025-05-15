@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { SuccessModelSchema } from "./database/database-model";
 
-export const LineStatusSchema = z.object({
+export const LineStatusClientResponseSchema = z.object({
   id: z.string(),
   name: z.string(),
   lineStatuses: z.array(
@@ -12,4 +11,7 @@ export const LineStatusSchema = z.object({
   ),
 });
 
-export type LineStatus = z.infer<typeof LineStatusSchema>;
+// export const LineStatusDtoSuccessSchema
+export type LineStatusClientResponse = z.infer<
+  typeof LineStatusClientResponseSchema
+>;

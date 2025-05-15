@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FailureDtoSchema, GetSuccessDtoSchema } from "./Dto";
 
 /**
  * This is a horrible zod schema to change metroapi weather data to a more usable format
@@ -113,10 +114,19 @@ export const WeatherLocationSchema = z.object({
   utcOffsetSeconds: z.number(),
 });
 
-export const WeatherSummarySchema = z.object({
+export const WeatherSummaryClientResponseSchema = z.object({
   location: WeatherLocationSchema,
   weatherData: WeatherSchema,
 });
+
+export const WeatherDtoSuccessSchema = GetSuccessDtoSchema(
+  WeatherSummaryClientResponseSchema
+);
+
+export const WeatherDtoSchema = z.union([
+  WeatherDtoSuccessSchema,
+  FailureDtoSchema,
+]);
 
 export type WeatherCurrent = z.infer<typeof WeatherCurrentSchema>;
 
@@ -126,4 +136,10 @@ export type Weather = z.infer<typeof WeatherSchema>;
 
 export type WeatherLocation = z.infer<typeof WeatherLocationSchema>;
 
-export type WeatherSummary = z.infer<typeof WeatherSummarySchema>;
+export type WeatherSummaryClientResponse = z.infer<
+  typeof WeatherSummaryClientResponseSchema
+>;
+
+export type WeatherSuccessDto = z.infer<typeof WeatherDtoSuccessSchema>;
+
+export type WeatherDto = z.infer<typeof WeatherDtoSchema>;

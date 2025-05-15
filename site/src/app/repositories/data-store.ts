@@ -1,26 +1,26 @@
 import {
-  FailureModel,
-  GetSuccessModelSchema,
-  Model,
-  SuccessModel,
-} from "../schemas/database/database-model";
+  FailureDto,
+  GetSuccessDtoSchema,
+  Dto,
+  SuccessDto,
+} from "../schemas/Dto";
 import { TableName } from "../schemas/database/database-table-names";
 import {
-  ModelToSqlTransformer,
+  DtoToSqlTransformer,
   SqlToModelTransformer,
 } from "../schemas/database/database-transformer";
 import db from "./database_init";
 import { ZodType } from "zod";
 
 export class Datastore<T> {
-  private readonly modelSchema: ZodType<SuccessModel<T>>;
+  private readonly modelSchema: ZodType<SuccessDto<T>>;
 
   constructor(private readonly tableName: TableName, schema: ZodType<T>) {
-    this.modelSchema = GetSuccessModelSchema(schema);
+    this.modelSchema = GetSuccessDtoSchema(schema);
   }
 
-  save = (dataModel: Model<T>) => {
-    const sqlData = ModelToSqlTransformer.parse(dataModel);
+  save = (dataModel: Dto<T>) => {
+    const sqlData = DtoToSqlTransformer.parse(dataModel);
     const saveData = db.prepare(
       `INSERT INTO ${this.tableName} (fetched_at, is_success, data, error) VALUES (?, ?, ?, ?)`
     );
@@ -32,7 +32,7 @@ export class Datastore<T> {
     );
   };
 
-  getLatest = (): Model<T> | null => {
+  getLatest = (): Dto<T> | null => {
     const getLatestTubeData = db.prepare(`
       SELECT * FROM ${this.tableName} ORDER BY fetched_at DESC LIMIT 1
     `);
@@ -52,7 +52,7 @@ export class Datastore<T> {
     return this.modelSchema.parse(parsedRow);
   };
 
-  getLatestSuccess = (): SuccessModel<T> | null => {
+  getLatestSuccess = (): SuccessDto<T> | null => {
     const getLatestTubeData = db.prepare(`
       SELECT * FROM ${this.tableName} WHERE is_success = 1 ORDER BY fetched_at DESC LIMIT 1
     `);
@@ -64,13 +64,13 @@ export class Datastore<T> {
       : null;
   };
 
-  getLatestFailure = (): FailureModel | null => {
+  getLatestFailure = (): FailureDto | null => {
     const getLatestTubeData = db.prepare(`
       SELECT * FROM ${this.tableName} WHERE is_success = 0 ORDER BY fetched_at DESC LIMIT 1
     `);
 
     const row = getLatestTubeData.get();
 
-    return row ? (SqlToModelTransformer.parse(row) as FailureModel) : null;
+    return row ? (SqlToModelTransformer.parse(row) as FailureDto) : null;
   };
 }
