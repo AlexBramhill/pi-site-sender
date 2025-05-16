@@ -1,8 +1,8 @@
 "use client";
 import { ONE_MINUTE_IN_MS } from "../consts/time";
 import useTubeStatus from "../hooks/use-tube-status";
-import styles from "./../page.module.css";
 import ApiStatusWrapper from "./api-status-wrapper";
+import styles from "./inner-grid.module.css";
 
 export default function TubeStatusOverlay() {
   const apiResult = useTubeStatus();
@@ -10,7 +10,7 @@ export default function TubeStatusOverlay() {
   return (
     <ApiStatusWrapper apiResult={apiResult}>
       {(dto) => (
-        <div className={styles.overlay}>
+        <div className={styles.container}>
           <h2>{dto.data.name}</h2>
           {dto.data.lineStatuses.map(
             (status: {

@@ -30,6 +30,7 @@
   flex-direction: column;
   gap: 2px;
   grid-row-start: 2;
+  max-height: 10rem;
 }
 
 .main ol {
