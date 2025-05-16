@@ -1,4 +1,3 @@
-import { ZodType } from "zod";
 import { FIFTEEN_MINUTES_IN_MS } from "../consts/time";
 import { Datastore } from "../repositories/data-store";
 import { FailureDto, Dto, SuccessDto } from "../schemas/Dto";

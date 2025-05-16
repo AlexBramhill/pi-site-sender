@@ -1,5 +1,4 @@
 "use client";
-import { ONE_MINUTE_IN_MS } from "../consts/time";
 import useTubeStatus from "../hooks/use-tube-status";
 import ApiStatusWrapper from "./api-status-wrapper";
 import styles from "./inner-grid.module.css";

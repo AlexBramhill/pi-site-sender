@@ -2,7 +2,6 @@
 
 import React from "react";
 import useClock from "../hooks/use-clock";
-import { ONE_SECOND_IN_MS } from "../consts/time";
 import { toTwoDigitTime } from "../converters/to-two-digit-time";
 
 const DigitalClock = () => {
