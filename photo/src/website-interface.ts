@@ -4,7 +4,7 @@ import { ScreenshotQuery } from "./schemas/query-schema";
 export const takeScreenshot = async (ScreenshotQuery: ScreenshotQuery) => {
   const PORT_REMOTE = 3000;
 
-  const targetUrl = `http://localhost:${PORT_REMOTE}`;
+  const targetUrl = `http://site:${PORT_REMOTE}`;
 
   const browserManager = await BrowserManager.getInstance({
     initialPageUrl: targetUrl,
