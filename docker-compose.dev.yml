@@ -4,6 +4,11 @@ services:
       file: ./site/docker-compose.dev.yml
       service: site
 
+  redis:
+    extends:
+      file: ./site/docker-compose.prod.yml
+      service: redis
+
   photo:
     extends:
       file: ./photo/docker-compose.dev.yml
@@ -12,3 +17,6 @@ services:
 networks:
   shared-network:
     driver: bridge
+
+volumes:
+  redis_data:

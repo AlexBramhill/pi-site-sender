@@ -1,13 +1,13 @@
 import { LineStatusClientResponseSchema } from "../schemas/line-status";
 import { WeatherSummaryClientResponseSchema } from "../schemas/weather";
-import { Datastore as DataStore } from "./data-store";
+import { RedisDatastore } from "./redis-data-store";
 
-export const tubeDataStore = new DataStore(
+export const tubeDataStore = new RedisDatastore(
   "tube",
   LineStatusClientResponseSchema
 );
 
-export const weatherDataStore = new DataStore(
+export const weatherDataStore = new RedisDatastore(
   "weather",
   WeatherSummaryClientResponseSchema
 );

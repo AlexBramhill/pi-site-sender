@@ -1,10 +1,10 @@
 import { FIFTEEN_MINUTES_IN_MS } from "../consts/time";
-import { Datastore } from "../repositories/data-store";
-import { FailureDto, Dto, SuccessDto } from "../schemas/Dto";
+import { RedisDatastore } from "../repositories/redis-data-store";
+import { Dto, SuccessDto, FailureDto } from "../schemas/Dto";
 
 export class DataRetrieverService<T> {
   constructor(
-    private readonly datastore: Datastore<T>,
+    private readonly datastore: RedisDatastore<T>,
     private readonly debounceTimeForSuccess: number = FIFTEEN_MINUTES_IN_MS,
     private readonly debounceTimeForFailure: number = FIFTEEN_MINUTES_IN_MS,
     private readonly makeClientRequest: () => Promise<T>
@@ -19,17 +19,16 @@ export class DataRetrieverService<T> {
       now.getTime() - this.debounceTimeForFailure
     );
 
-    const latestDataFromDatabase = this.datastore.getLatest();
+    const latestDataFromDatabase = await this.datastore.getLatest();
 
-    if (latestDataFromDatabase) {
-      if (
-        latestDataFromDatabase.fetchedAt >=
+    if (
+      latestDataFromDatabase &&
+      latestDataFromDatabase.fetchedAt >=
         (latestDataFromDatabase.isSuccess
           ? debounceTimeForSuccess
           : debounceTimeForFailure)
-      ) {
-        return latestDataFromDatabase;
-      }
+    ) {
+      return latestDataFromDatabase;
     }
 
     try {
@@ -41,7 +40,7 @@ export class DataRetrieverService<T> {
         isSuccess: true,
       };
 
-      this.datastore.save(newModel);
+      await this.datastore.save(newModel);
 
       return newModel;
     } catch (error) {
@@ -51,7 +50,7 @@ export class DataRetrieverService<T> {
         error: String(error),
       };
 
-      this.datastore.save(errorModel);
+      await this.datastore.save(errorModel);
       return errorModel;
     }
   }

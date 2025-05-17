@@ -10,6 +10,7 @@ const configSchema = z.object({
   HOME_STATION_NAME: z.coerce.string(),
   INBOUND_CARDINAL_DIRECTION: z.coerce.string(),
   OUTBOUND_CARDINAL_DIRECTION: z.coerce.string(),
+  REDIS_URL: z.coerce.string().default("redis://redis:6379"),
 });
 
 export const config = configSchema.parse(process.env);
