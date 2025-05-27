@@ -13,7 +13,6 @@ export const getWeatherSummary =
     const url = "https://api.open-meteo.com/v1/forecast";
     const responses = await fetchWeatherApi(url, params);
 
-    // Process first location. Add a for-loop for multiple locations or weather models
     const response = responses[0];
 
     // Attributes for timezone and location
@@ -29,10 +28,14 @@ export const getWeatherSummary =
     const sunrise = daily.variables(4)!;
     const sunset = daily.variables(5)!;
 
-    // Validate and transform the weather data using WeatherSchema
+    console.log({
+      sunrise: Number(sunrise.valuesInt64(0)) * 1000,
+      sunriseDate: new Date(Number(sunrise.valuesInt64(0)) * 1000),
+    });
+
     const weatherData = WeatherSchema.parse({
       current: {
-        time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+        time: new Date(Number(current.time()) * 1000),
         isDay: current.variables(0)!.value(),
         temperature2m: current.variables(1)!.value(),
         precipitation: current.variables(2)!.value(),
@@ -56,22 +59,17 @@ export const getWeatherSummary =
           ),
         ].map(
           (_, i) =>
-            new Date(
-              (Number(daily.time()) + i * daily.interval() + utcOffsetSeconds) *
-                1000
-            )
+            new Date((Number(daily.time()) + i * daily.interval()) * 1000)
         ),
         temperature2mMin: daily.variables(0)!.valuesArray()!,
         temperature2mMax: daily.variables(1)!.valuesArray()!,
         windGusts10mMax: daily.variables(2)!.valuesArray()!,
         windSpeed10mMax: daily.variables(3)!.valuesArray()!,
         sunrise: [...Array(sunrise.valuesInt64Length())].map(
-          (_, i) =>
-            new Date((Number(sunrise.valuesInt64(i)) + utcOffsetSeconds) * 1000)
+          (_, i) => new Date(Number(sunrise.valuesInt64(i)) * 1000)
         ),
         sunset: [...Array(sunset.valuesInt64Length())].map(
-          (_, i) =>
-            new Date((Number(sunset.valuesInt64(i)) + utcOffsetSeconds) * 1000)
+          (_, i) => new Date(Number(sunset.valuesInt64(i)) * 1000)
         ),
         uvIndexMax: daily.variables(6)!.valuesArray()!,
         precipitationProbabilityMax: daily.variables(7)!.valuesArray()!,
