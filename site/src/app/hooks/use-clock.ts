@@ -2,7 +2,7 @@
 import useSWR from "swr";
 import { ONE_SECOND_IN_MS } from "../consts/time";
 
-const useClock = (): Date | null => {
+const useClock = (): Date => {
   const refreshInMs = ONE_SECOND_IN_MS;
 
   const key = `clock-${refreshInMs}`;
@@ -13,7 +13,7 @@ const useClock = (): Date | null => {
     fallbackData: new Date(),
   });
 
-  return time ?? null;
+  return time ?? new Date();
 };
 
 export default useClock;

@@ -1,34 +1,37 @@
 "use client";
 
 import useClock from "@/app/hooks/use-clock";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "../loading";
 import styles from "./DigitalClock.module.css";
 
 interface DigitalClockProps {
-  className?: string;
-  timeClassName?: string;
   time?: Date;
 }
 
-const DigitalClock: React.FC<DigitalClockProps> = ({ className, time }) => {
+const DigitalClock: React.FC<DigitalClockProps> = ({ time }) => {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const currentTime = time ?? useClock();
 
-  if (!currentTime) {
+  if (!isClient) {
     return <Loading />;
   }
   const hour = String(currentTime.getHours()).padStart(2, "0");
   const minutes = String(currentTime.getMinutes()).padStart(2, "0");
 
   return (
-    <div className={`${styles.container} ${className ?? ""}`}>
-      <div className={styles.timeBlock}>
+    <div className="flex items-center justify-center">
+      <div className="w-[2ch] text-right">
         <span>{hour}</span>
       </div>
       <div>
         <span>:</span>
       </div>
-      <div className={styles.timeBlock}>
+      <div className="w-[2ch] text-left">
         <span>{minutes}</span>
       </div>
     </div>
