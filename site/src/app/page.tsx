@@ -2,7 +2,7 @@ import styles from "./page.module.css";
 import TubeStatusOverlay from "./components/tube-status";
 import PicoGrid from "./components/pico-grid";
 import WeatherImage from "./components/weather-image";
-import DigitalClockWithWeather from "./components/digital-clock-with-weather";
+import DigitalClock from "./components/clocks/digital-clock";
 
 export default async function Home() {
   return (
@@ -10,7 +10,7 @@ export default async function Home() {
       <main className={styles.main}>
         <PicoGrid>
           <WeatherImage />
-          <DigitalClockWithWeather />
+          <DigitalClock />
           <TubeStatusOverlay />
         </PicoGrid>
       </main>
