@@ -12,12 +12,12 @@ export const getWebsitePageScreenshot = async (
   });
 
   console.log(
-    `Fetching screenshot from: http://screenshot-taker:4000${screenshotPath}?${query}`
+    `Fetching screenshot from: http://screenshot-taker:4001${screenshotPath}?${query}`
   );
 
   // TODO: config out this hard coded port
   const response = await fetch(
-    `http://screenshot-taker:4000${screenshotPath}?${query}`,
+    `http://screenshot-taker:4001${screenshotPath}?${query}`,
     { method: "GET" }
   );
 

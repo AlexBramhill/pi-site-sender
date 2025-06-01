@@ -1,7 +1,7 @@
 import { serve } from '@hono/node-server';
 import app from './app.js';
 
-const PORT = 4001;
+const PORT = 4000;
 
 serve({
   fetch: app.fetch,
