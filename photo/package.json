@@ -1,5 +1,5 @@
 {
-  "name": "photo-hono",
+  "name": "photo",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",

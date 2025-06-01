@@ -2,7 +2,7 @@ import { toQueryParamString } from "../helpers/to-query-params.js";
 import type { PhotoQuery } from "../schemas/photo-query-schema.js";
 
 
-export const get = async (photoPath: string, params: PhotoQuery): Promise<any> => {
+export const getWebsitePagePhoto = async (photoPath: string, params: PhotoQuery): Promise<any> => {
     const query = toQueryParamString(params);
 
     // TODO: config out this hard coded port
