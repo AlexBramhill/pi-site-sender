@@ -2,7 +2,7 @@ import { toQueryParamString } from "../helpers/to-query-params.js";
 import type { ScreenshotQuery } from "../schemas/screenshot-query-schema.js";
 
 
-export const getWebsitePageScreenshot = async (screenshotPath: string, params: ScreenshotQuery): Promise<any> => {
+export const getWebsitePageScreenshot = async (screenshotPath: string, params: ScreenshotQuery): Promise<ArrayBuffer> => {
     const query = toQueryParamString(params);
 
     // TODO: config out this hard coded port

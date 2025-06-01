@@ -1,0 +1,11 @@
+services:
+  screenshot-processer:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: screenshot-processer:latest
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "4002:4002"
+    restart: unless-stopped
