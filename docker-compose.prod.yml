@@ -14,6 +14,11 @@ services:
       file: ./photo/docker-compose.prod.yml
       service: photo
 
+  backend-orchestrator:
+    extends:
+      file: ./backend-orchestrator/docker-compose.prod.yml
+      service: backend-orchestrator
+
 networks:
   shared-network:
     driver: bridge

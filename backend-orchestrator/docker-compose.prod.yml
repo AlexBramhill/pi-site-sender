@@ -1,12 +1,11 @@
 services:
-  photo:
+  backend-orchestrator:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    image: photo:latest
+    image: backend-orchestrator:latest
     environment:
       - NODE_ENV=production
-      - SITE_URL=http://site:3000
     ports:
-      - "4000:4000"
+      - "4001:4001"
     restart: unless-stopped

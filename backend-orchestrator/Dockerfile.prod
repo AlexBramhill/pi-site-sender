@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/playwright:v1.52.0-noble
+
+WORKDIR /app
+
+COPY package.json /app/package.json
+RUN npm install
+
+COPY . /app
+
+EXPOSE 4001
+
+CMD ["npm", "run", "build", "&&", "npm", "run", "start"]
