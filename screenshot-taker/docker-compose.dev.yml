@@ -1,9 +1,9 @@
 services:
-  photo:
+  screenshot-taker:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    image: photo:dev
+    image: screenshot-taker:dev
     volumes:
       - ./src:/app/src
     environment:

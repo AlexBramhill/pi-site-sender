@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import { BackendOrchestratorQuerySchema } from './schemas/backend-orchestrator-query-schema.js';
-import { getWebsitePagePhoto } from './clients/photo.js';
+import { getWebsitePageScreenshot } from './clients/screenshot-taker.js';
 
 const app = new Hono();
 
@@ -12,7 +12,7 @@ app.all(
         const path = c.req.path;
         const queryParams = c.req.valid('query');
 
-        const result = await getWebsitePagePhoto(path, queryParams);
+        const result = await getWebsitePageScreenshot(path, queryParams);
 
         return new Response(result, {
             headers: {

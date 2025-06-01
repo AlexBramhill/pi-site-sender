@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const configSchema = z.object({
-  PHOTO_URL: z.coerce.string().default("photo"),
+  PHOTO_URL: z.coerce.string().default("screenshot"),
   PHOTO_TRANSFORMER_URL: z.coerce.string().default("redis://redis:6379"),
 
 });

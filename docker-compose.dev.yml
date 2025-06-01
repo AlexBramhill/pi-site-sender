@@ -9,10 +9,10 @@ services:
       file: ./site/docker-compose.prod.yml
       service: redis
 
-  photo:
+  screenshot-taker:
     extends:
-      file: ./photo/docker-compose.dev.yml
-      service: photo
+      file: ./screenshot-taker/docker-compose.dev.yml
+      service: screenshot-taker
 
   backend-orchestrator:
     extends:

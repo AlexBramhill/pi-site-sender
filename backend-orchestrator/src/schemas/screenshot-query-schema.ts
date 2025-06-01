@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // This is a work around due to how express seems to handle empty query params as an empty object and not null
 // There is also some further fun around the typing of these query params
-export const PhotoQuerySchema = z
+export const ScreenshotQuerySchema = z
   .object({
     width: z.number({ coerce: true }).optional(),
     height: z.number({ coerce: true }).optional(),
@@ -17,4 +17,4 @@ export const PhotoQuerySchema = z
     }
   );
 
-export type PhotoQuery = z.infer<typeof PhotoQuerySchema>;
+export type ScreenshotQuery = z.infer<typeof ScreenshotQuerySchema>;
