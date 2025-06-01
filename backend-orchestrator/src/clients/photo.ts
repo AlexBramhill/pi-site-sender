@@ -1,5 +1,5 @@
 import { toQueryParamString } from "../helpers/to-query-params.js";
-import { PhotoQuery } from "../schemas/photo-query-schema.js";
+import type { PhotoQuery } from "../schemas/photo-query-schema.js";
 
 
 export const get = async (photoPath: string, params: PhotoQuery): Promise<any> => {
