@@ -2,18 +2,22 @@ from fastapi import FastAPI, File, UploadFile, Query, HTTPException
 from fastapi.responses import StreamingResponse
 from PIL import Image
 
-from converter import convert_image
-from downsampler import downsample_image
+from src.enums.downsample_mode import DownsampleMode
+
+from src.converter import convert_image
+from src.downsampler import downsample_image
 
 app = FastAPI()
 
 
-@app.post("/process-image/")
+@app.post("/")
 async def process_image(
     file: UploadFile = File(...),
-    output_format: str = Query('PNG', regex="^(PNG|JPG|BMP)$", description="Output format: PNG, JPG, or BMP"),
-    downsample_mode: str = Query('1bit', regex="^(1bit|4grey|rgb332)$", description="Downsample mode")
+    format: str = Query('png', regex="^(png|jpeg|bmp)$",
+                        description="Output format: PNG, JPG, or BMP"),
+
 ):
+    downsample_mode = DownsampleMode.ONE_BIT
     try:
         image = Image.open(file.file)
     except Exception:
@@ -24,9 +28,9 @@ async def process_image(
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-    buf = convert_image(processed_img, output_format)
+    buf = convert_image(format, processed_img)
 
-    return StreamingResponse(buf, media_type=f"image/{output_format.lower()}")
+    return StreamingResponse(buf, media_type=f"image/{format.lower()}")
 
 
 if __name__ == "__main__":

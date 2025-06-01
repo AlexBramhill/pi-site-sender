@@ -4,9 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const configSchema = z.object({
-  PHOTO_URL: z.coerce.string().default("screenshot"),
-  PHOTO_TRANSFORMER_URL: z.coerce.string().default("redis://redis:6379"),
-
+  PHOTO_REQUEST_FORMAT: z.enum(["png", "jpeg"]).default("png"),
 });
 
 export const config = configSchema.parse(process.env);

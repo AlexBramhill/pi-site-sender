@@ -1,14 +1,7 @@
-from enum import Enum
 from PIL import Image
 
-class DownsampleMode(Enum):
-    ONE_BIT = 0
-    TWO_BIT = 1
-    FOUR_BIT_PALETTE = 3
-    EIGHT_BIT_PALETTE = 7
-    RGB332 = 5
-    RGB565 = 6
-    RGB888 = 8
+from src.enums.downsample_mode import DownsampleMode
+
 
 def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
     if mode == DownsampleMode.ONE_BIT:
@@ -17,6 +10,7 @@ def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
     elif mode == DownsampleMode.TWO_BIT:
         # 2-bit grayscale (4 levels)
         grey = img.convert('L')
+
         def quantize_2bit(x):
             # Map 0-255 to 4 levels: 0, 85, 170, 255
             return int(x / 85) * 85
@@ -25,11 +19,11 @@ def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
     elif mode == DownsampleMode.FOUR_BIT_PALETTE:
         # 4-bit palette: 16 colors
         # Use PIL quantize to reduce to 16 colors
-        return img.convert('P', palette=Image.ADAPTIVE, colors=16)
+        return img.convert('P', palette=Image.Palette.ADAPTIVE, colors=16)
 
     elif mode == DownsampleMode.EIGHT_BIT_PALETTE:
         # 8-bit palette: 256 colors
-        return img.convert('P', palette=Image.ADAPTIVE, colors=256)
+        return img.convert('P', palette=Image.Palette.ADAPTIVE, colors=256)
 
     elif mode == DownsampleMode.RGB332:
         rgb = img.convert('RGB')
@@ -43,7 +37,8 @@ def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
 
         img_p = Image.new('P', rgb.size)
         img_p.putpalette(palette)
-        pixels = [((r >> 5) << 5) | ((g >> 5) << 2) | (b >> 6) for r, g, b in rgb.getdata()]
+        pixels = [((r >> 5) << 5) | ((g >> 5) << 2) | (b >> 6)
+                  for r, g, b in rgb.getdata()]
         img_p.putdata(pixels)
         return img_p
 

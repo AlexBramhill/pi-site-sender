@@ -1,5 +1,5 @@
-import { serve } from '@hono/node-server';
-import app from './app.js';
+import { serve } from "@hono/node-server";
+import app from "./app.js";
 
 const PORT = 4000;
 
