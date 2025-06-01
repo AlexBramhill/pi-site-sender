@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "module": "NodeNext",
-    "strict": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
-    "outDir": "./dist"
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "lib": ["ES2022"]
 }

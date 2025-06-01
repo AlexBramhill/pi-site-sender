@@ -7,5 +7,6 @@
     "outDir": "dist",
     "strict": true
   },
+  "exclude": ["node_modules"],
   "lib": ["ES2022"]
 }
