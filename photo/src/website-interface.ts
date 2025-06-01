@@ -1,5 +1,5 @@
-import BrowserManager from "./browser-manager";
-import { ScreenshotQuery } from "./schemas/query-schema";
+import BrowserManager from "./browser-manager.js";
+import type { ScreenshotQuery } from "./schemas/query-schema.js";
 
 export const takeScreenshot = async (ScreenshotQuery: ScreenshotQuery) => {
   const PORT_REMOTE = 3000;

@@ -6,7 +6,6 @@ services:
     image: photo:latest
     environment:
       - NODE_ENV=production
-      - SITE_URL=http://site:3000
     ports:
       - "4000:4000"
     restart: unless-stopped

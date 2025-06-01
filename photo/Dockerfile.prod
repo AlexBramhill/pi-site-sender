@@ -9,4 +9,4 @@ COPY . /app
 
 EXPOSE 4000
 
-CMD ["npx", "ts-node", "src/server.ts"]
+CMD ["npm", "run", "build", "&&", "npm", "run", "start"]

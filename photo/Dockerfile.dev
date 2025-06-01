@@ -9,5 +9,4 @@ COPY . /app
 
 EXPOSE 4000
 
-# Command to run the server
 CMD ["npm", "run", "dev"]
