@@ -18,7 +18,6 @@ export const processScreenshot = async (
     "screenshot." + config.PHOTO_REQUEST_FORMAT
   );
 
-  // Send POST request to FastAPI endpoint with query parameters
   const response = await fetch(`http://screenshot-processer:4002/?${query}`, {
     method: "POST",
     body: formData,
