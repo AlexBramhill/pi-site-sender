@@ -1,6 +1,6 @@
+import type { ScreenshotProcessorQuery } from "@screenshot/shared";
 import { config } from "../config/config.js";
 import { toQueryParamString } from "../helpers/to-query-params.js";
-import type { ScreenshotProcessorQuery } from "../schemas/screenshot-processor-query-schema.js";
 
 export const processScreenshot = async (
   screenshot: ArrayBuffer,
