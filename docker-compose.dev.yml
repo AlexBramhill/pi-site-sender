@@ -9,10 +9,20 @@ services:
       file: ./site/docker-compose.prod.yml
       service: redis
 
-  photo:
+  screenshot-taker:
     extends:
-      file: ./photo/docker-compose.dev.yml
-      service: photo
+      file: ./screenshot-taker/docker-compose.dev.yml
+      service: screenshot-taker
+
+  screenshot-processer:
+    extends:
+      file: ./screenshot-processer/docker-compose.dev.yml
+      service: screenshot-processer
+
+  backend-orchestrator:
+    extends:
+      file: ./backend-orchestrator/docker-compose.dev.yml
+      service: backend-orchestrator
 
 networks:
   shared-network:

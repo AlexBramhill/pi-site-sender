@@ -1,0 +1,11 @@
+services:
+  backend-orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: backend-orchestrator:latest
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "4000:4000"
+    restart: unless-stopped

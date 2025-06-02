@@ -1,0 +1,12 @@
+services:
+  backend-orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: backend-orchestrator:dev
+    volumes:
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "4000:4000"

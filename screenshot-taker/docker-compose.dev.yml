@@ -1,0 +1,12 @@
+services:
+  screenshot-taker:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: screenshot-taker:dev
+    volumes:
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "4001:4001"

@@ -1,4 +1,7 @@
-class COLOUR_PROFILE:
+from enum import Enum
+
+
+class DownsampleMode(Enum):
     ONE_BIT = 0
     TWO_BIT = 1
     FOUR_BIT_PALETTE = 3
