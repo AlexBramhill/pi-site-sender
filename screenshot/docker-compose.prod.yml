@@ -1,14 +1,4 @@
 services:
-  site:
-    extends:
-      file: ./site/docker-compose.prod.yml
-      service: site
-
-  redis:
-    extends:
-      file: ./site/docker-compose.prod.yml
-      service: redis
-
   screenshot-taker:
     extends:
       file: ./screenshot-taker/docker-compose.prod.yml
@@ -25,8 +15,9 @@ services:
       service: backend-orchestrator
 
 networks:
-  shared-network:
-    driver: bridge
+  default:
+    name: screenshot-network
+    external: true
 
 volumes:
   redis_data:

@@ -20,5 +20,10 @@ services:
       - redis_data:/data
     restart: unless-stopped
 
+networks:
+  default:
+    name: screenshot-network
+    external: true
+
 volumes:
   redis_data:

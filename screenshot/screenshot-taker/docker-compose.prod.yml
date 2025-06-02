@@ -1,0 +1,9 @@
+services:
+  screenshot-taker:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: screenshot-taker:latest
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
