@@ -1,8 +1,11 @@
 import { z } from "zod";
+import { ScreenshotFormatSchema } from "./screenshot-format-schema.js";
 
-export const ScreenshotProcesserQuerySchema = z
-  .object({
-    format: z.enum(["jpeg", "png", "bmp"]).optional().default("png"),
-  })
+export const ScreenshotProcesserQuerySchema = z.object({
+  format: ScreenshotFormatSchema.optional().default("png"),
+});
 
-export type ScreenshotProcesserQuery = z.infer<typeof ScreenshotProcesserQuerySchema>;
+export type ScreenshotProcesserQuery = z.infer<
+  typeof ScreenshotProcesserQuerySchema
+>;
+

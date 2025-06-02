@@ -1,16 +1,28 @@
 import io
 from PIL import Image
+from src.enums.screenshot_format import ScreenshotFormat
 
 
-def convert_image (output_format: str, processed_img: Image.Image) -> io.BytesIO:
+def convert_image(output_format: ScreenshotFormat, processed_img: Image.Image) -> io.BytesIO:
     buf = io.BytesIO()
-    save_format = output_format.upper()
+    pil_format_map = {
+        ScreenshotFormat.jpeg: "JPEG",
+        ScreenshotFormat.png: "PNG",
+        ScreenshotFormat.bmp: "BMP",
+    }
 
-    if save_format == 'JPG':
+    if output_format == ScreenshotFormat.jpeg:
         if processed_img.mode not in ['RGB', 'L']:
             processed_img = processed_img.convert('RGB')
-        save_format = 'JPEG'
 
-    processed_img.save(buf, format=save_format)
+    if output_format == ScreenshotFormat.bmp or output_format == ScreenshotFormat.bmp_raw:
+        if processed_img.mode not in ['1', 'L', 'RGB']:
+            processed_img = processed_img.convert('RGB')
+
+    if output_format == ScreenshotFormat.bmp_raw:
+        raw_bytes = processed_img.tobytes()
+        return io.BytesIO(raw_bytes)
+
+    processed_img.save(buf, format=pil_format_map[output_format])
     buf.seek(0)
     return buf

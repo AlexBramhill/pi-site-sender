@@ -5,7 +5,7 @@ import type { ScreenshotProcesserQuery } from "../schemas/screenshot-processer-q
 export const processScreenshot = async (
   screenshot: ArrayBuffer,
   params: ScreenshotProcesserQuery
-): Promise<Blob> => {
+): Promise<Uint8Array> => {
   const query = toQueryParamString(params);
 
   const formData = new FormData();
@@ -28,8 +28,7 @@ export const processScreenshot = async (
     throw new Error(`API Error: ${response.statusText}`);
   }
 
-  // Assuming the response is an image stream, return the Blob
-  const resultBlob = await response.blob();
+  const arrayBuffer = await response.arrayBuffer();
 
-  return resultBlob;
+  return new Uint8Array(arrayBuffer);
 };
