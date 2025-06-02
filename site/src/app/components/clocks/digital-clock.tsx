@@ -3,19 +3,18 @@
 import useClock from "@/app/hooks/use-clock";
 import React, { useEffect, useState } from "react";
 import Loading from "../loading";
-import styles from "./DigitalClock.module.css";
 
 interface DigitalClockProps {
   time?: Date;
 }
 
-const DigitalClock: React.FC<DigitalClockProps> = ({ time }) => {
+const DigitalClock: React.FC<DigitalClockProps> = () => {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const currentTime = time ?? useClock();
+  const currentTime = useClock();
 
   if (!isClient) {
     return <Loading />;
