@@ -1,9 +1,9 @@
 services:
-  screenshot-processer:
+  screenshot-processor:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    image: screenshot-processer:latest
+    image: screenshot-processor:latest
     environment:
       - NODE_ENV=production
     ports:

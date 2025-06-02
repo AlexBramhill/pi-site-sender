@@ -1,10 +1,10 @@
 import { config } from "../config/config.js";
 import { toQueryParamString } from "../helpers/to-query-params.js";
-import type { ScreenshotProcesserQuery } from "../schemas/screenshot-processer-query-schema.js";
+import type { ScreenshotProcessorQuery } from "../schemas/screenshot-processor-query-schema.js";
 
 export const processScreenshot = async (
   screenshot: ArrayBuffer,
-  params: ScreenshotProcesserQuery
+  params: ScreenshotProcessorQuery
 ): Promise<Uint8Array> => {
   const query = toQueryParamString(params);
 
@@ -18,7 +18,7 @@ export const processScreenshot = async (
     "screenshot." + config.PHOTO_REQUEST_FORMAT
   );
 
-  const response = await fetch(`http://screenshot-processer:4002/?${query}`, {
+  const response = await fetch(`http://screenshot-processor:4002/?${query}`, {
     method: "POST",
     body: formData,
   });

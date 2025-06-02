@@ -14,10 +14,10 @@ services:
       file: ./screenshot-taker/docker-compose.prod.yml
       service: screenshot-taker
 
-  screenshot-processer:
+  screenshot-processor:
     extends:
-      file: ./screenshot-processer/docker-compose.prod.yml
-      service: screenshot-processer
+      file: ./screenshot-processor/docker-compose.prod.yml
+      service: screenshot-processor
 
   backend-orchestrator:
     extends:

@@ -1,9 +1,9 @@
 services:
-  screenshot-processer:
+  screenshot-processor:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    image: screenshot-processer:dev
+    image: screenshot-processor:dev
     volumes:
       - ./src:/app/src
     environment:
