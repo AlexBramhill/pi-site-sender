@@ -4,6 +4,8 @@ import { BackendOrchestratorQuerySchema } from "./schemas/backend-orchestrator-q
 import { getWebsitePageScreenshot } from "./clients/screenshot-taker.js";
 import { processScreenshot } from "./clients/screenshot-processor.js";
 import { getContentTypeForScreenshotFormat } from "./helpers/get-content-type-for-screenshot-format.js";
+import { transformToScreenshotProcessorQuery } from "./transformers/backend-orchestrator-query-to-screenshot-processor-query.js";
+import { transformToScreenshotQuery } from "./transformers/backend-orchestrator-query-to-screenshot-query.js";
 
 const app = new Hono();
 
@@ -17,8 +19,14 @@ app.all("*", zValidator("query", BackendOrchestratorQuerySchema), async (c) => {
     )}`
   );
 
-  const websiteImage = await getWebsitePageScreenshot(path, queryParams);
-  const processedImage = await processScreenshot(websiteImage, queryParams);
+  const websiteImage = await getWebsitePageScreenshot(
+    path,
+    transformToScreenshotQuery(queryParams)
+  );
+  const processedImage = await processScreenshot(
+    websiteImage,
+    transformToScreenshotProcessorQuery(queryParams)
+  );
 
   return c.body(processedImage, 200, {
     "Content-Type": getContentTypeForScreenshotFormat(queryParams.format),

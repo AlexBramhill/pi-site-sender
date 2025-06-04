@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { ScreenshotQuerySchema } from "./schemas/query-schema.js";
 import { takeScreenshot } from "./website-interface.js";
+import { ScreenshotQuerySchema } from "./schemas/screenshot-query-schema.js";
 
 const app = new Hono();
 

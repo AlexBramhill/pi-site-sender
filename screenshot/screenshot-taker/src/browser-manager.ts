@@ -1,14 +1,13 @@
-
 import {
   chromium,
   type Browser,
   type BrowserContext,
   type BrowserContextOptions,
   type LaunchOptions,
-  type Page
+  type Page,
 } from "playwright";
 
-import type { ScreenshotQuery } from "./schemas/query-schema.js";
+import type { ScreenshotQuery } from "./schemas/screenshot-query-schema.js";
 
 class BrowserManager {
   private static instance: BrowserManager | null = null;
@@ -16,7 +15,7 @@ class BrowserManager {
   private context: BrowserContext | null = null;
   private page: Page | null = null;
 
-  private constructor() { }
+  private constructor() {}
 
   public static async getInstance({
     contextOptions,
@@ -68,12 +67,10 @@ class BrowserManager {
   ): Promise<Buffer> {
     const page = this.getPage();
 
-    if (screenshotQuery.width && screenshotQuery.height) {
-      const { width, height } = screenshotQuery;
-      await page.setViewportSize({ width, height });
-    }
+    const { width, height } = screenshotQuery;
+    await page.setViewportSize({ width, height });
 
-    return (await screenshotQuery.format) === "jpeg"
+    return screenshotQuery.format === "jpeg"
       ? this.takeJpegScreenshot(page)
       : this.takePngScreenshot(page);
   }
@@ -92,7 +89,6 @@ class BrowserManager {
     await page.screenshot({
       type: "png",
     });
-
 
   private takeJpegScreenshot = async (page: Page): Promise<Buffer> =>
     await page.screenshot({

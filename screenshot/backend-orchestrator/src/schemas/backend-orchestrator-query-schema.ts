@@ -1,10 +1,17 @@
 import { z } from "zod";
-import { ScreenshotQuerySchema } from "./screenshot-query-schema.js";
-import { ScreenshotProcessorQuerySchema } from "./screenshot-processor-query-schema.js";
+import {
+  ScreenshotFormat,
+  ScreenshotFormatSchema,
+} from "./screenshot-format-schema.js";
+import { ScreenshotRotationSchema } from "./screenshot-rotation-schema.js";
+import { ScreenshotDimensionsSchema } from "./screenshot-dimensions.js";
 
 export const BackendOrchestratorQuerySchema = z.intersection(
-  ScreenshotQuerySchema,
-  ScreenshotProcessorQuerySchema
+  ScreenshotDimensionsSchema,
+  z.object({
+    format: ScreenshotFormatSchema.optional().default(ScreenshotFormat.png),
+    rotation: ScreenshotRotationSchema.optional().default(0),
+  })
 );
 
 export type BackendOrchestratorQuery = z.infer<

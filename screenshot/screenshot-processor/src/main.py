@@ -15,7 +15,7 @@ app = FastAPI()
 async def process_image(
     file: UploadFile = File(...),
     format: ScreenshotFormat = Query(default=ScreenshotFormat.png),
-
+    rotation: int = Query(default=0, enum=[0, 90, 180, 270]),
 ):
     print("Processing image to format:", format)
     downsample_mode = DownsampleMode.ONE_BIT
@@ -29,6 +29,13 @@ async def process_image(
 
     file.file.seek(0)
     image = Image.open(file.file)
+
+    # Apply rotation if specified
+    if rotation in [0, 90, 180, 270]:
+        if rotation != 0:
+            image = image.rotate(-rotation, expand=True)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid rotation value")
 
     try:
         processed_img = downsample_image(image, downsample_mode)

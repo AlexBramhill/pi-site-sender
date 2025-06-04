@@ -7,3 +7,5 @@
 - [ ] Commonise shared TS
 
 - [ ] General tech debt analysis
+
+- [ ] Clean configs/secrets
