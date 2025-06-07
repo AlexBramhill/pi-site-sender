@@ -1,17 +1,9 @@
-import styles from "./page.module.css";
-import DigitalClock from "./components/clocks/digital-clock";
+import { Grid } from "./components/grid/grid";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1 className="text-3xl font-bold underline">Everyone!</h1>
-        {/* <PicoGrid>
-          <WeatherImage /> */}
-        <DigitalClock />
-        {/* <TubeStatusOverlay />
-        </PicoGrid> */}
-      </main>
+    <div className="w-screen h-screen overflow-hidden bg-gray-100 p-4">
+      <Grid />
     </div>
   );
 }

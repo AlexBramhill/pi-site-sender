@@ -4,11 +4,7 @@ import useClock from "@/app/hooks/use-clock";
 import React, { useEffect, useState } from "react";
 import Loading from "../loading";
 
-interface DigitalClockProps {
-  time?: Date;
-}
-
-const DigitalClock: React.FC<DigitalClockProps> = () => {
+const Date: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
@@ -19,22 +15,26 @@ const DigitalClock: React.FC<DigitalClockProps> = () => {
   if (!isClient) {
     return <Loading />;
   }
-  const hour = String(currentTime.getHours()).padStart(2, "0");
-  const minutes = String(currentTime.getMinutes()).padStart(2, "0");
+
+  const day = String(currentTime.getDate()).padStart(2, "0");
+  const month = String(currentTime.getMonth() + 1).padStart(2, "0"); // months are 0-indexed
+  const year = currentTime.getFullYear();
 
   return (
     <div className="flex items-center justify-center">
       <div className="w-[2ch] text-right">
-        <span>{hour}</span>
+        <span>{day}</span>
       </div>
-      <div>
-        <span>:</span>
+      <div>/</div>
+      <div className="w-[2ch] text-center">
+        <span>{month}</span>
       </div>
-      <div className="w-[2ch] text-left">
-        <span>{minutes}</span>
+      <div>/</div>
+      <div className="w-[4ch] text-left">
+        <span>{year}</span>
       </div>
     </div>
   );
 };
 
-export default DigitalClock;
+export default Date;
