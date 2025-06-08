@@ -44,18 +44,15 @@ export const Box: React.FC<{
   return (
     <div
       className={`
-        border
+        border-2
         border-current
         border-solid
-        rounded-sm
+        rounded
         p-1
         flex
         items-center 
         justify-center     
-        col-start-${gridColumnStart} 
-        col-span-${gridColumnSpan} 
-        row-start-${gridRowStart} 
-        row-span-${gridRowSpan}  
+        ${gridClasses}
         ${className || ""}
     `}
     >

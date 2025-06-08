@@ -1,7 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Pixelify+Sans:wght@400..700&display=swap");
 @import "tailwindcss";
 @import "./styles/fonts.css";
-
+@source inline('col-start-{1..12}');
+@source inline('col-span-{1..12}');
+@source inline('row-start-{1..12}');
+@source inline('row-span-{1..12}');
 :root {
   --background: #ffffff;
   --foreground: #000000;
