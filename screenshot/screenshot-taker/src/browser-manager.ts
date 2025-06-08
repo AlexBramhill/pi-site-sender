@@ -43,7 +43,13 @@ class BrowserManager {
     launchOptions?: LaunchOptions
   ): Promise<void> {
     this.browser = await chromium.launch(launchOptions);
-    this.context = await this.browser.newContext(contextOptions);
+
+    const mergedContextOptions: BrowserContextOptions = {
+      timezoneId: "Europe/London",
+      ...contextOptions,
+    };
+
+    this.context = await this.browser.newContext(mergedContextOptions);
     this.page = await this.context.newPage();
     await this.page.emulateMedia({ colorScheme: "dark" });
   }
