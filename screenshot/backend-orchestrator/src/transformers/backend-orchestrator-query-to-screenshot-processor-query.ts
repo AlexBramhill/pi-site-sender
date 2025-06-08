@@ -10,5 +10,6 @@ export const transformToScreenshotProcessorQuery = (
   return ScreenshotProcessorQuerySchema.parse({
     format: originalQuery.format,
     rotation: originalQuery.rotation,
+    colour_profile: originalQuery.colour_profile,
   });
 };

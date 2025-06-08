@@ -1,31 +1,29 @@
 from PIL import Image
 
-from src.enums.downsample_mode import DownsampleMode
+from src.enums.colour_profile import ColourProfile
 
 
-def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
-    if mode == DownsampleMode.ONE_BIT:
+def downsample_image(img: Image.Image, mode: ColourProfile) -> Image.Image:
+    if mode == ColourProfile.ONE_BIT:
         return img.convert('1', dither=Image.Dither.NONE)
 
-    elif mode == DownsampleMode.TWO_BIT:
-        # 2-bit grayscale (4 levels)
+    elif mode == ColourProfile.TWO_BIT:
         grey = img.convert('L')
 
         def quantize_2bit(x):
-            # Map 0-255 to 4 levels: 0, 85, 170, 255
             return int(x / 85) * 85
         return grey.point(quantize_2bit)
 
-    elif mode == DownsampleMode.FOUR_BIT_PALETTE:
+    elif mode == ColourProfile.FOUR_BIT_PALETTE:
         # 4-bit palette: 16 colors
         # Use PIL quantize to reduce to 16 colors
         return img.convert('P', palette=Image.Palette.ADAPTIVE, colors=16)
 
-    elif mode == DownsampleMode.EIGHT_BIT_PALETTE:
+    elif mode == ColourProfile.EIGHT_BIT_PALETTE:
         # 8-bit palette: 256 colors
         return img.convert('P', palette=Image.Palette.ADAPTIVE, colors=256)
 
-    elif mode == DownsampleMode.RGB332:
+    elif mode == ColourProfile.RGB332:
         rgb = img.convert('RGB')
         # Create RGB332 palette (256 colors)
         palette = []
@@ -42,7 +40,7 @@ def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
         img_p.putdata(pixels)
         return img_p
 
-    elif mode == DownsampleMode.RGB565:
+    elif mode == ColourProfile.RGB565:
         rgb = img.convert('RGB')
         # RGB565: 5 bits red, 6 bits green, 5 bits blue
         pixels = []
@@ -61,7 +59,7 @@ def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
         img565.putdata(pixels)
         return img565
 
-    elif mode == DownsampleMode.RGB888:
+    elif mode == ColourProfile.RGB888:
         # Full 24-bit RGB, just ensure RGB mode
         return img.convert('RGB')
 

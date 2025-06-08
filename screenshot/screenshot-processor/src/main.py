@@ -2,8 +2,9 @@ from fastapi import FastAPI, File, UploadFile, Query, HTTPException
 from fastapi.responses import StreamingResponse
 from PIL import Image
 
-from src.enums.downsample_mode import DownsampleMode
 from src.enums.screenshot_format import ScreenshotFormat
+from src.enums.colour_profile import ColourProfile
+
 from src.helpers.get_content_type_for_screenshot_format import get_content_type_for_screenshot_format
 from src.converter import convert_image
 from src.downsampler import downsample_image
@@ -16,9 +17,11 @@ async def process_image(
     file: UploadFile = File(...),
     format: ScreenshotFormat = Query(default=ScreenshotFormat.png),
     rotation: int = Query(default=0, enum=[0, 90, 180, 270]),
+    colour_profile: ColourProfile = Query(default=ColourProfile.ONE_BIT, enum=list(ColourProfile)
+                                          )
 ):
-    print("Processing image to format:", format)
-    downsample_mode = DownsampleMode.ONE_BIT
+    print(
+        f"Received file: {file.filename}, format: {format}, rotation: {rotation}, colour_profile: {colour_profile}")
 
     try:
         image = Image.open(file.file)
@@ -38,7 +41,7 @@ async def process_image(
         raise HTTPException(status_code=400, detail="Invalid rotation value")
 
     try:
-        processed_img = downsample_image(image, downsample_mode)
+        processed_img = downsample_image(image, colour_profile)
     except Exception as e:
         print(f"Exception occurred during image processing: {e}")
         raise HTTPException(status_code=400, detail=str(e))
