@@ -1,8 +1,8 @@
 "use client";
-import useWeather from "../hooks/use-weather";
-import { toStringCelsius } from "../converters/to-string-celcius";
-import { toPercent } from "../converters/to-percent";
-import ApiStatusWrapper from "./api-status-wrapper";
+import useWeather from "../../hooks/use-weather";
+import { toStringCelsius } from "../../converters/to-string-celcius";
+import { toPercent } from "../../converters/to-percent";
+import ApiStatusWrapper from "../api-status-wrapper";
 
 export default function WeatherToday() {
   const apiResult = useWeather();

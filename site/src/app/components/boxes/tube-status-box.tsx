@@ -1,5 +1,5 @@
 import { BoxConfig } from "../grid/box-config";
-import TubeStatusOverlay from "../tube-status";
+import TubeStatusOverlay from "../tube/tube-status";
 
 const tubeStatusContent: React.ReactNode = <TubeStatusOverlay />;
 export const tubeStatusBoxConfig: BoxConfig = {

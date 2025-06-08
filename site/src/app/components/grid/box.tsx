@@ -28,6 +28,12 @@ export const Box: React.FC<{
   gridRowStart,
   gridRowSpan,
 }) => {
+  console.log("Box rendered", {
+    gridColumnStart,
+    gridColumnSpan,
+    gridRowStart,
+    gridRowSpan,
+  });
   const gridClasses = [
     `col-start-${gridColumnStart}`,
     `col-span-${gridColumnSpan}`,
@@ -37,9 +43,21 @@ export const Box: React.FC<{
 
   return (
     <div
-      className={`border border-current border-solid rounded-sm p-1 flex items-center justify-center ${gridClasses} ${
-        className || ""
-      }`}
+      className={`
+        border
+        border-current
+        border-solid
+        rounded-sm
+        p-1
+        flex
+        items-center 
+        justify-center     
+        col-start-${gridColumnStart} 
+        col-span-${gridColumnSpan} 
+        row-start-${gridRowStart} 
+        row-span-${gridRowSpan}  
+        ${className || ""}
+    `}
     >
       {children}
     </div>

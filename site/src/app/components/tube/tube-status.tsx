@@ -1,7 +1,6 @@
 "use client";
-import useTubeStatus from "../hooks/use-tube-status";
-import ApiStatusWrapper from "./api-status-wrapper";
-import styles from "./inner-grid.module.css";
+import useTubeStatus from "../../hooks/use-tube-status";
+import ApiStatusWrapper from "../api-status-wrapper";
 
 export default function TubeStatusOverlay() {
   const apiResult = useTubeStatus();
@@ -9,7 +8,7 @@ export default function TubeStatusOverlay() {
   return (
     <ApiStatusWrapper apiResult={apiResult}>
       {(dto) => (
-        <div className={styles.container}>
+        <div className="flex flex-col justify-center box-border text-center h-full">
           <h3>{dto.data.name}</h3>
           {dto.data.lineStatuses.map(
             (status: {

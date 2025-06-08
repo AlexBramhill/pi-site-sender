@@ -22,6 +22,9 @@ const canPlaceBox = (
   for (let r = startRow; r < startRow + boxRows; r++) {
     for (let c = startCol; c < startCol + boxCols; c++) {
       if (booleanGrid[r][c]) {
+        console.log(
+          `Cannot place box at (${startRow}, ${startCol}) with size ${boxCols}x${boxRows} because cell (${r}, ${c}) is already occupied`
+        );
         return false;
       }
     }
@@ -52,13 +55,22 @@ const tryPlaceBox = (
 ): PlacedBox | null => {
   for (let r = 0; r <= booleanGrid.length - rows; r++) {
     for (let c = 0; c <= booleanGrid[0].length - cols; c++) {
-      if (canPlaceBox(booleanGrid, r, c, rows, cols)) {
-        placeBoxInGrid(booleanGrid, r, c, rows, cols);
-        console.log(
-          `Placed box ${box.key} at (${r}, ${c}) with size ${cols}x${rows}`
-        );
-        return { ...box, cols, rows, startCol: c, startRow: r };
+      if (booleanGrid[r][c]) {
+        continue;
       }
+
+      if (!canPlaceBox(booleanGrid, r, c, rows, cols)) {
+        console.log(
+          `Cannot place box ${box.key} at (${r}, ${c}) with size ${cols}x${rows}`
+        );
+        continue;
+      }
+
+      placeBoxInGrid(booleanGrid, r, c, rows, cols);
+      console.log(
+        `Placed box ${box.key} at (${r}, ${c}) with size ${cols}x${rows}`
+      );
+      return { ...box, cols, rows, startCol: c, startRow: r };
     }
   }
   console.log(

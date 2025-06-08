@@ -1,5 +1,5 @@
 import { BoxConfig } from "../grid/box-config";
-import WeatherImage from "../weather-image";
+import WeatherImage from "../weather/weather-image";
 
 const weatherContent: React.ReactNode = <WeatherImage />;
 export const weatherBoxConfig: BoxConfig = {

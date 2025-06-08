@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import useWeather from "../hooks/use-weather";
-import ApiStatusWrapper from "./api-status-wrapper";
-import { weatherCodeLookup } from "../client/weather-codes";
+import useWeather from "../../hooks/use-weather";
+import ApiStatusWrapper from "../api-status-wrapper";
+import { weatherCodeLookup } from "../../client/weather-codes";
 
 export default function WeatherImage() {
   const apiResult = useWeather();
