@@ -19,7 +19,7 @@ const DigitalClock: React.FC = () => {
   const minutes = String(currentTime.getMinutes()).padStart(2, "0");
 
   return (
-    <div className="flex items-center justify-center">
+    <h2 className="flex items-center justify-center">
       <div className="w-[2ch] text-right">
         <span>{hour}</span>
       </div>
@@ -29,7 +29,7 @@ const DigitalClock: React.FC = () => {
       <div className="w-[2ch] text-left">
         <span>{minutes}</span>
       </div>
-    </div>
+    </h2>
   );
 };
 

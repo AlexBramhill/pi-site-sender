@@ -1,4 +1,4 @@
-import { BoxProps } from "./box";
+import { BoxConfig } from "./box-config";
 import { PlacedBox } from "./placed-box";
 
 // This file contains messy logic that can be improved later.
@@ -46,7 +46,7 @@ const placeBoxInGrid = (
 
 const tryPlaceBox = (
   booleanGrid: BooleanGrid,
-  box: BoxProps,
+  box: BoxConfig,
   cols: number,
   rows: number
 ): PlacedBox | null => {
@@ -54,34 +54,50 @@ const tryPlaceBox = (
     for (let c = 0; c <= booleanGrid[0].length - cols; c++) {
       if (canPlaceBox(booleanGrid, r, c, rows, cols)) {
         placeBoxInGrid(booleanGrid, r, c, rows, cols);
+        console.log(
+          `Placed box ${box.key} at (${r}, ${c}) with size ${cols}x${rows}`
+        );
         return { ...box, cols, rows, startCol: c, startRow: r };
       }
     }
   }
+  console.log(
+    `Could not place box ${box.key} with size ${cols}x${rows}, trying smaller sizes`
+  );
   return null;
 };
 
 export const fitBoxes = (
   gridCols: number,
   gridRows: number,
-  boxes: BoxProps[]
+  boxes: BoxConfig[]
 ): PlacedBox[] => {
   const grid = createEmptyGrid(gridRows, gridCols);
-  const sortedBoxes = [...boxes].sort((a, b) => a.priority - b.priority);
   const placedBoxes: PlacedBox[] = [];
 
-  for (const box of sortedBoxes) {
+  for (const box of boxes) {
+    console.log(
+      `Fitting box ${box.key} with preferred size ${box.preferredCols}x${box.preferredRows}`
+    );
     let placed: PlacedBox | null = null;
-    for (let cols = box.preferredCols; cols >= box.minCols && !placed; cols--) {
+    placingLoop: for (
+      let cols = box.preferredCols;
+      cols >= box.minCols && !placed;
+      cols--
+    ) {
       for (
         let rows = box.preferredRows;
         rows >= box.minRows && !placed;
         rows--
       ) {
+        console.log(`Trying to place box ${box.key} with size ${cols}x${rows}`);
         placed = tryPlaceBox(grid, box, cols, rows);
+        if (placed) {
+          placedBoxes.push(placed);
+          break placingLoop;
+        }
       }
     }
-    if (placed) placedBoxes.push(placed);
   }
 
   return placedBoxes;

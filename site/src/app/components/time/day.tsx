@@ -28,9 +28,9 @@ const Day: React.FC = () => {
   const day = daysOfWeek[currentTime.getDay()];
 
   return (
-    <div className="flex items-center justify-center">
+    <h3 className="flex items-center justify-center">
       <span>{day}</span>
-    </div>
+    </h3>
   );
 };
 

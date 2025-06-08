@@ -10,7 +10,7 @@ export default function TubeStatusOverlay() {
     <ApiStatusWrapper apiResult={apiResult}>
       {(dto) => (
         <div className={styles.container}>
-          <h2 className="text-4xl">{dto.data.name}</h2>
+          <h3>{dto.data.name}</h3>
           {dto.data.lineStatuses.map(
             (status: {
               statusSeverity: number;

@@ -27,10 +27,10 @@ const updateGridSize = (
   const width = window.innerWidth;
   const height = window.innerHeight;
 
-  const maxCols = 5;
+  const maxCols = 6;
   const maxRows = 6;
-  const cellWidth = 150;
-  const cellHeight = 150;
+  const cellWidth = 100;
+  const cellHeight = 100;
 
   const cols = Math.min(maxCols, Math.max(1, Math.floor(width / cellWidth)));
   const rows = Math.min(maxRows, Math.max(1, Math.floor(height / cellHeight)));

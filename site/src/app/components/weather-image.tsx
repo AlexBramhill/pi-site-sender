@@ -12,27 +12,18 @@ export default function WeatherImage() {
     <ApiStatusWrapper apiResult={apiResult}>
       {(dto) => {
         const weatherCode = dto.data.weatherData.daily.weatherCode[0];
+        const weather = weatherCodeLookup[weatherCode];
 
         return (
-          <>
-            <div>
-              <Image
-                src={`/svg/amcharts_weather_icons_1.0.0/static/${weatherCodeLookup[weatherCode].nightIcon}`}
-                alt={weatherCodeLookup[weatherCode].description}
-                width={100}
-                height={100}
-              />
-            </div>
-            <div
-              style={{
-                textAlign: "center",
-                position: "relative",
-                top: "-20px",
-              }}
-            >
-              {weatherCodeLookup[weatherCode].description}
-            </div>
-          </>
+          <div className="flex flex-wrap items-center justify-center">
+            <Image
+              src={`/svg/amcharts_weather_icons_1.0.0/static/${weather.nightIcon}`}
+              alt={weather.description}
+              width={64}
+              height={64}
+            />
+            <p className="text-center">{weather.description}</p>
+          </div>
         );
       }}
     </ApiStatusWrapper>

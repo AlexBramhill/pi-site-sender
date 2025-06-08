@@ -3,6 +3,7 @@
 import useGridSize from "@/app/hooks/use-grid-size";
 import { boxes } from "@/app/components/boxes/boxes";
 import { fitBoxes } from "./grid-helper";
+import { Box } from "./box";
 
 export const Grid: React.FC = () => {
   const { cols, rows } = useGridSize();
@@ -11,28 +12,22 @@ export const Grid: React.FC = () => {
 
   return (
     <div
-      className="grid gap-3 w-full h-full"
+      className="grid gap-1 w-full h-full p-1"
       style={{
         gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
         gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
       }}
     >
       {placedBoxes.map((box) => (
-        <div
-          key={box.id}
-          className="bg-blue-600 text-white rounded flex items-center justify-center text-center p-2"
-          style={{
-            gridColumnStart: box.startCol + 1,
-            gridColumnEnd: `span ${box.cols}`,
-            gridRowStart: box.startRow + 1,
-            gridRowEnd: `span ${box.rows}`,
-            userSelect: "none",
-          }}
-          title={`Priority: ${box.priority}\nSize: ${box.cols}x${box.rows}`}
+        <Box
+          key={box.key}
+          gridColumnStart={box.startCol + 1}
+          gridColumnSpan={box.cols}
+          gridRowStart={box.startRow + 1}
+          gridRowSpan={box.rows}
         >
-          {box.label}
-          <br />
-        </div>
+          {box.content}
+        </Box>
       ))}
     </div>
   );

@@ -1,20 +1,45 @@
-export interface BoxProps {
-  id: string;
-  minCols: number;
-  minRows: number;
-  preferredCols: number;
-  preferredRows: number;
-  priority: number;
-  label: string;
-}
+export type GetBoxFragment = ({
+  key,
+  gridColumnStart,
+  gridColumnSpan,
+  gridRowStart,
+  gridRowSpan,
+}: {
+  key: string;
+  gridColumnStart: number;
+  gridColumnSpan: number;
+  gridRowStart: number;
+  gridRowSpan: number;
+}) => React.ReactNode;
 
 export const Box: React.FC<{
+  key: string;
+  gridColumnStart: number;
+  gridColumnSpan: number;
+  gridRowStart: number;
+  gridRowSpan: number;
   children: React.ReactNode;
   className?: string;
-}> = ({ children, className }) => {
+}> = ({
+  children,
+  className,
+  gridColumnStart,
+  gridColumnSpan,
+  gridRowStart,
+  gridRowSpan,
+}) => {
+  const gridClasses = [
+    `col-start-${gridColumnStart}`,
+    `col-span-${gridColumnSpan}`,
+    `row-start-${gridRowStart}`,
+    `row-span-${gridRowSpan}`,
+  ].join(" ");
+
   return (
     <div
-      className={`border border-current border-solid rounded-sm p-1 ${className}`}
+      className={`border border-current border-solid rounded-sm p-1 flex items-center justify-center ${gridClasses} ${
+        className || ""
+      }`}
     >
       {children}
     </div>

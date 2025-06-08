@@ -107,27 +107,27 @@ export const weatherCodeLookup: Record<
     nightIcon: "snowy-4.svg",
   },
   80: {
-    description: "Slight Rain showers",
+    description: "Slight Rain Showers",
     dayIcon: "rainy-4.svg",
     nightIcon: "rainy-4.svg",
   },
   81: {
-    description: "Moderate Rain showers",
+    description: "Moderate Rain Showers",
     dayIcon: "rainy-5.svg",
     nightIcon: "rainy-5.svg",
   },
   82: {
-    description: "Violent Rain showers",
+    description: "Violent Rain Showers",
     dayIcon: "rainy-6.svg",
     nightIcon: "rainy-6.svg",
   },
   85: {
-    description: "Slight Snow showers",
+    description: "Slight Snow Showers",
     dayIcon: "snowy-4.svg",
     nightIcon: "snowy-4.svg",
   },
   86: {
-    description: "Heavy Snow showers",
+    description: "Heavy Snow Showers",
     dayIcon: "snowy-6.svg",
     nightIcon: "snowy-6.svg",
   },
