@@ -5,7 +5,7 @@ from src.enums.downsample_mode import DownsampleMode
 
 def downsample_image(img: Image.Image, mode: DownsampleMode) -> Image.Image:
     if mode == DownsampleMode.ONE_BIT:
-        return img.convert('1')
+        return img.convert('1', dither=Image.Dither.NONE)
 
     elif mode == DownsampleMode.TWO_BIT:
         # 2-bit grayscale (4 levels)
