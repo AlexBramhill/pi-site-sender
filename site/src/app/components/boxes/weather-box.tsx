@@ -1,5 +1,6 @@
 import { BoxConfig } from "../grid/box-config";
 import { ColumnFill } from "../layout/column-fill";
+import { HorizontalLine } from "../layout/horizontal-line";
 import { WeatherFeelsLikeTemp } from "../weather/weather-feels-like-temp";
 import WeatherImage from "../weather/weather-image";
 import { WeatherMinMaxTemp } from "../weather/weather-min-max-temp";
@@ -11,10 +12,16 @@ const weatherContent: React.ReactNode = (
   <ColumnFill>
     <WeatherImage />
     <WeatherRain />
-    <WeatherTemp />
+    <div>
+      <HorizontalLine />
+      <WeatherTemp />
+    </div>
     <WeatherFeelsLikeTemp />
     <WeatherMinMaxTemp />
-    <WeatherSunriseSunset />
+    <div>
+      <HorizontalLine />
+      <WeatherSunriseSunset />
+    </div>
   </ColumnFill>
 );
 export const weatherBoxConfig: BoxConfig = {
@@ -22,6 +29,6 @@ export const weatherBoxConfig: BoxConfig = {
   minCols: 1,
   minRows: 1,
   preferredCols: 1,
-  preferredRows: 2,
+  preferredRows: 3,
   content: weatherContent,
 };

@@ -1,5 +1,6 @@
 import { BoxConfig } from "../grid/box-config";
 import { ColumnFill } from "../layout/column-fill";
+import { HorizontalLine } from "../layout/horizontal-line";
 import Date from "../time/date";
 import Day from "../time/day";
 import DigitalClock from "../time/digital-clock";

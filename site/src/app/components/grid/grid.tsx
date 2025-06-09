@@ -12,7 +12,7 @@ export const Grid: React.FC = () => {
 
   return (
     <div
-      className="grid gap-1 w-full h-full p-1"
+      className="grid gap-2 w-full h-full p-2"
       style={{
         gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
         gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,

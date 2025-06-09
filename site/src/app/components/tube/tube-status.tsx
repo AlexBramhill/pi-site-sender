@@ -8,7 +8,7 @@ export default function TubeStatusOverlay() {
   return (
     <ApiStatusWrapper apiResult={apiResult}>
       {(dto) => (
-        <div className="flex flex-col justify-center box-border text-center h-full">
+        <>
           <h2>{dto.data.name}</h2>
           {dto.data.lineStatuses.map(
             (status: {
@@ -20,7 +20,7 @@ export default function TubeStatusOverlay() {
               </span>
             )
           )}
-        </div>
+        </>
       )}
     </ApiStatusWrapper>
   );

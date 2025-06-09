@@ -5,10 +5,16 @@
 @source inline('col-span-{1..12}');
 @source inline('row-start-{1..12}');
 @source inline('row-span-{1..12}');
+
+.bg-foreground {
+  background-color: var(--foreground);
+}
+
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 1.1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,7 +35,6 @@ html {
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-size: 1rem; /* Ensure body text scales with the root font size */
 }
 
 body {
