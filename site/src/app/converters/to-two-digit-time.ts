@@ -23,6 +23,15 @@ export const getSecond = (time: Date): string => {
   });
 };
 
+export const getTime = (time: Date): string => {
+  return time.toLocaleTimeString(LOCALE, {
+    timeZone: TIME_ZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+};
+
 export const getDayOfWeek = (time: Date): string => {
   return time.toLocaleDateString(LOCALE, {
     timeZone: TIME_ZONE,

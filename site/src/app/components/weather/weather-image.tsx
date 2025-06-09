@@ -22,7 +22,7 @@ export default function WeatherImage() {
               width={64}
               height={64}
             />
-            <p className="text-center">{weather.description}</p>
+            <h3 className="text-center">{weather.description}</h3>
           </div>
         );
       }}

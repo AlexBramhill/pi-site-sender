@@ -44,7 +44,7 @@ export const Box: React.FC<{
   return (
     <div
       className={`
-        border-2
+        border-1
         border-current
         border-solid
         rounded

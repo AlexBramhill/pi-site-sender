@@ -1,14 +1,15 @@
 import { BoxConfig } from "../grid/box-config";
+import { ColumnFill } from "../layout/column-fill";
 import Date from "../time/date";
 import Day from "../time/day";
 import DigitalClock from "../time/digital-clock";
 
 const datetimeContent: React.ReactNode = (
-  <div>
+  <ColumnFill>
     <DigitalClock />
     <Day />
     <Date />
-  </div>
+  </ColumnFill>
 );
 export const datetimeBoxConfig: BoxConfig = {
   key: "datetime",
