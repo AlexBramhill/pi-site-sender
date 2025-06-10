@@ -5,7 +5,7 @@ import {
   BbcRssClientResponse,
 } from "../schemas/bbc-rss";
 
-const parser: Parser<{}, BbcArticle> = new Parser();
+const parser: Parser<object, BbcArticle> = new Parser();
 
 export const getBBCHeadlines = async (): Promise<BbcRssClientResponse> => {
   const feed = await parser.parseURL(

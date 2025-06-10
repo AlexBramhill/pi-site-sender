@@ -2,7 +2,6 @@
 import { toStringCelsius } from "@/app/converters/to-string-celcius";
 import ApiStatusWrapper from "../api-status-wrapper";
 import useWeather from "@/app/hooks/use-weather";
-import { ColumnFill } from "../layout/column-fill";
 
 export const WeatherTemp = () => {
   const apiResult = useWeather();

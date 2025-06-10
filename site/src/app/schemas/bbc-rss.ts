@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { DateTransformer } from "../transformers.ts/date-transformer";
 
 export const BbcArticleSchema = z.object({
   title: z.string(),
