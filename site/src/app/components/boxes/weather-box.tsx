@@ -13,17 +13,18 @@ const weatherContent: React.ReactNode = (
     <WeatherImage />
     <WeatherRain />
     <div>
-      <HorizontalLine />
+      <HorizontalLine className="my-4" />
       <WeatherTemp />
     </div>
     <WeatherFeelsLikeTemp />
     <WeatherMinMaxTemp />
     <div>
-      <HorizontalLine />
+      <HorizontalLine className="my-4" />
       <WeatherSunriseSunset />
     </div>
   </ColumnFill>
 );
+
 export const weatherBoxConfig: BoxConfig = {
   key: "weather",
   minCols: 1,

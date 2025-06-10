@@ -11,7 +11,6 @@ export const LineStatusClientResponseSchema = z.object({
   ),
 });
 
-// export const LineStatusDtoSuccessSchema
 export type LineStatusClientResponse = z.infer<
   typeof LineStatusClientResponseSchema
 >;
