@@ -6,17 +6,16 @@ export const toApiUrl = (
 ): ApiUrl => {
   const apiPath = `/api${path}`;
 
-  if (!queryParams) {
-    return apiPath;
+  if (!queryParams) return apiPath;
+
+  const params = new URLSearchParams();
+
+  for (const [key, value] of Object.entries(queryParams)) {
+    if (value !== undefined) {
+      params.set(key, String(value));
+    }
   }
 
-  const queryString = Object.entries(queryParams)
-    .filter(([, value]) => value !== undefined)
-    .map(
-      ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`
-    )
-    .join("&");
-
-  return `${apiPath}?${queryString}`;
+  const queryString = params.toString();
+  return queryString ? `${apiPath}?${queryString}` : apiPath;
 };

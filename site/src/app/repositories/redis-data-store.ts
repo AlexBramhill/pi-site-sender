@@ -3,14 +3,16 @@ import { ZodType } from "zod";
 import { IDataStore } from "./database-store";
 import redisClient from "./database_init";
 
-export class RedisDatastore<T> implements IDataStore<T> {
-  private readonly schema: ZodType<T>;
+export class RedisDatastore<TSchema, TParams = unknown>
+  implements IDataStore<TSchema>
+{
+  private readonly schema: ZodType<TSchema>;
   private readonly cacheKey: string;
   private readonly ttlSeconds: number;
 
   constructor(
     cacheKey: string,
-    schema: ZodType<T>,
+    schema: ZodType<TSchema>,
     ttlSeconds: number = 15 * 60
   ) {
     this.cacheKey = cacheKey;
@@ -18,47 +20,41 @@ export class RedisDatastore<T> implements IDataStore<T> {
     this.ttlSeconds = ttlSeconds;
   }
 
-  async save(dataModel: Dto<T>): Promise<void> {
+  private generateCacheKey(params: TParams): string {
+    const paramKey = params ? JSON.stringify(params) : "no-query";
+    return `${this.cacheKey}:${paramKey}`;
+  }
+
+  async save(dataModel: Dto<TSchema>, requestParams: TParams): Promise<void> {
+    const key = this.generateCacheKey(requestParams);
     const dataString = JSON.stringify(dataModel);
-    await redisClient.set(this.cacheKey, dataString, {
+    await redisClient.set(key, dataString, {
       EX: this.ttlSeconds,
     });
   }
 
-  async getLatest(): Promise<Dto<T> | null> {
-    const dataString = await redisClient.get(this.cacheKey);
+  async getLatest(requestParams: TParams): Promise<Dto<TSchema> | null> {
+    const key = this.generateCacheKey(requestParams);
+    const dataString = await redisClient.get(key);
     if (!dataString) return null;
 
-    let parsed: unknown;
-
     try {
-      parsed = JSON.parse(dataString);
+      const parsed = JSON.parse(dataString);
+      return parsed ? parseDto(this.schema, parsed) : null;
     } catch {
       return null;
     }
-
-    if (parsed === null) {
-      return null;
-    }
-
-    return parseDto(this.schema, parsed);
   }
 
-  // Get latest successful DTO
-  async getLatestSuccess(): Promise<SuccessDto<T> | null> {
-    const latest = await this.getLatest();
-    if (latest && latest.isSuccess) {
-      return latest as SuccessDto<T>;
-    }
-    return null;
+  async getLatestSuccess(
+    requestParams: TParams
+  ): Promise<SuccessDto<TSchema> | null> {
+    const latest = await this.getLatest(requestParams);
+    return latest?.isSuccess ? (latest as SuccessDto<TSchema>) : null;
   }
 
-  // Get latest failure DTO
-  async getLatestFailure(): Promise<FailureDto | null> {
-    const latest = await this.getLatest();
-    if (latest && !latest.isSuccess) {
-      return latest as FailureDto;
-    }
-    return null;
+  async getLatestFailure(requestParams: TParams): Promise<FailureDto | null> {
+    const latest = await this.getLatest(requestParams);
+    return latest && !latest.isSuccess ? (latest as FailureDto) : null;
   }
 }

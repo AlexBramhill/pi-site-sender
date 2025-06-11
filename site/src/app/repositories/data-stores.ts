@@ -4,7 +4,7 @@ import { WeatherSummaryClientResponseSchema } from "../schemas/weather";
 import { RedisDatastore } from "./redis-data-store";
 
 export const tubeDataStore = new RedisDatastore(
-  "tube",
+  "tubeStatus",
   LineStatusClientResponseSchema
 );
 
