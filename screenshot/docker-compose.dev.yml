@@ -16,7 +16,7 @@ services:
 
 networks:
   default:
-    name: screenshot-network
+    name: site-sender-network
     external: true
 
 volumes:

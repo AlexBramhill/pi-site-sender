@@ -1,1 +1,1 @@
-docker compose --file docker-compose.prod.yml up --build -d
+docker compose -p pi-site-sender-site --file docker-compose.prod.yml up --build -d

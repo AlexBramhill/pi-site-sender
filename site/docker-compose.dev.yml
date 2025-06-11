@@ -19,13 +19,13 @@ services:
   redis:
     image: redis:latest
     volumes:
-      - redis_data:/data
+      - pi-site-sender-redis_data:/data
     restart: unless-stopped
 
 networks:
   default:
-    name: screenshot-network
+    name: site-sender-network
     external: true
 
 volumes:
-  redis_data:
+  pi-site-sender-redis_data:
