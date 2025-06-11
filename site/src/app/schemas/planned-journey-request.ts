@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LatLongStringSchema } from "./lat-long";
+import { LatLongStringSchema } from "./lat-long-string";
 
 export const GetPlannedJourneyRequestQuerySchema = z.object({
   to: LatLongStringSchema,

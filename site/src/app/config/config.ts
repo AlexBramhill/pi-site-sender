@@ -1,6 +1,6 @@
 import { z } from "zod";
 import dotenv from "dotenv";
-import { LatLongStringSchema } from "../schemas/lat-long";
+import { LatLongStringSchema } from "../schemas/lat-long-string";
 
 dotenv.config();
 
