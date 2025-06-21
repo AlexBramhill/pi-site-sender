@@ -21,7 +21,23 @@ export class RedisDatastore<TSchema, TParams = unknown>
   }
 
   private generateCacheKey(params: TParams): string {
-    const paramKey = params ? JSON.stringify(params) : "no-query";
+    if (
+      params === undefined ||
+      params === null ||
+      (Array.isArray(params) && params.length === 0) ||
+      (typeof params === "object" &&
+        !Array.isArray(params) &&
+        Object.keys(params).length === 0)
+    ) {
+      return `${this.cacheKey}:no-query`;
+    }
+
+    let paramKey: string;
+    paramKey =
+      typeof params === "object"
+        ? JSON.stringify(params, Object.keys(params).sort())
+        : String(params);
+
     return `${this.cacheKey}:${paramKey}`;
   }
 
