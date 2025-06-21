@@ -32,7 +32,7 @@ export const getPlannedJourney = async ({
   toName,
   fromName,
   dateTime,
-}: GetPlannedJourneyRequestQuery): string => {
+}: GetPlannedJourneyRequestQuery) => {
   const baseUrl = "https://api.digital.tfl.gov.uk/Journey/JourneyResults/";
 
   const params = new URLSearchParams({
