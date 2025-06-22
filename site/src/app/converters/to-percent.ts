@@ -5,5 +5,5 @@ export const toPercent = (value: number, decimalPlaces: number = 0): string => {
   if (error) {
     return "N/A";
   }
-  return data.toFixed(decimalPlaces) + "%";
+  return data.toFixed(decimalPlaces * 100) + "%";
 };

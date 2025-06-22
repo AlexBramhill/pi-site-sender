@@ -16,8 +16,7 @@ export default function WeatherToday() {
 
         return (
           <div className="flex flex-wrap items-center justify-center">
-            <p>▲ {getTime(sunrise)}</p>
-            <p>▼ {getTime(sunset)}</p>
+            <p>▲ {getTime(sunrise)}</p> <p>▼ {getTime(sunset)}</p>
           </div>
         );
       }}
