@@ -11,3 +11,5 @@ export const DateTransformer = z.string().transform((val, ctx) => {
   }
   return date;
 });
+
+export type DateTransformerType = z.infer<typeof DateTransformer>;

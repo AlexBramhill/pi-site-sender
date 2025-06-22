@@ -16,7 +16,7 @@ export const WeatherMinMaxTemp = () => {
 
         return (
           <p className="text-center">
-            {toStringCelsius(temperature2mMin)} -
+            {toStringCelsius(temperature2mMin)} -{" "}
             {toStringCelsius(temperature2mMax, 0)}
           </p>
         );

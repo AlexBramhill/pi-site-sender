@@ -1,22 +1,38 @@
 import { getBBCHeadlines } from "../client/bbc-rss";
-import { getLineStatus } from "../client/tube";
+import { getArrivals, getLineStatus, getPlannedJourney } from "../client/tube";
 import { getWeatherSummary } from "../client/weather-summary";
 import { config } from "../config/config";
 import { FIVE_MINUTES_IN_MS, ONE_MINUTE_IN_MS } from "../consts/time";
 import {
   bbcDataStore,
-  tubeDataStore,
+  tubeArrivalsDataStore,
+  tubeStatusDataStore as tubeStatusDataStore,
   weatherDataStore,
 } from "../repositories/data-stores";
+import { GetPlannedJourneyRequestQuery } from "../schemas/planned-journey-request";
 import { DataRetrieverService } from "./data-retriever";
 
-export const tubeDataRetriever = new DataRetrieverService(
-  tubeDataStore,
+export const tubeStatusDataRetriever = new DataRetrieverService(
+  tubeStatusDataStore,
   ONE_MINUTE_IN_MS,
   ONE_MINUTE_IN_MS,
   () => getLineStatus(config.HOME_TUBE_LINE_NAME)
 );
 
+export const tubePlannerDataRetriever = new DataRetrieverService(
+  tubeStatusDataStore,
+  ONE_MINUTE_IN_MS,
+  ONE_MINUTE_IN_MS,
+  (getPlannedJourneyRequest: GetPlannedJourneyRequestQuery) =>
+    getPlannedJourney(getPlannedJourneyRequest)
+);
+
+export const tubeArrivalsDataRetriever = new DataRetrieverService(
+  tubeArrivalsDataStore,
+  ONE_MINUTE_IN_MS,
+  ONE_MINUTE_IN_MS,
+  () => getArrivals(config.HOME_STATION_NAPTAN_ID)
+);
 export const weatherDataRetriever = new DataRetrieverService(
   weatherDataStore,
   FIVE_MINUTES_IN_MS,

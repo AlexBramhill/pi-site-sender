@@ -5,7 +5,7 @@ import { toApiUrl } from "../converters/to-api-url";
 
 const useTubeStatus = () =>
   useApi({
-    apiUrl: toApiUrl("/tube"),
+    apiUrl: toApiUrl("/tube/status"),
     schema: LineStatusClientResponseSchema,
   });
 

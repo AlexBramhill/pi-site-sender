@@ -49,6 +49,7 @@ export const Box: React.FC<{
         border-solid
         rounded-xl
         p-1
+        overflow-hidden
         ${gridClasses}
         ${className || ""}
     `}

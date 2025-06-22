@@ -1,7 +1,13 @@
 import { BoxConfig } from "../grid/box-config";
 import TubeStatusOverlay from "../tube/tube-status";
+import TubeArrivalsOverlay from "../tube/tube-arrivals";
 
-const tubeStatusContent: React.ReactNode = <TubeStatusOverlay />;
+const tubeContent: React.ReactNode = (
+  <div className="overflow-hidden h-full">
+    <TubeStatusOverlay />
+    <TubeArrivalsOverlay />
+  </div>
+);
 
 export const tubeStatusBoxConfig: BoxConfig = {
   key: "tubeStatus",
@@ -9,5 +15,5 @@ export const tubeStatusBoxConfig: BoxConfig = {
   minRows: 1,
   preferredCols: 2,
   preferredRows: 2,
-  content: tubeStatusContent,
+  content: tubeContent,
 };

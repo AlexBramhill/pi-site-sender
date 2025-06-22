@@ -2,15 +2,20 @@ import { FIFTEEN_MINUTES_IN_MS } from "../consts/time";
 import { RedisDatastore } from "../repositories/redis-data-store";
 import { Dto, SuccessDto, FailureDto } from "../schemas/Dto";
 
-export class DataRetrieverService<T> {
+export class DataRetrieverService<
+  TResponse,
+  TRequestParams extends unknown[] = []
+> {
   constructor(
-    private readonly datastore: RedisDatastore<T>,
+    private readonly datastore: RedisDatastore<TResponse, TRequestParams>,
     private readonly debounceTimeForSuccess: number = FIFTEEN_MINUTES_IN_MS,
     private readonly debounceTimeForFailure: number = FIFTEEN_MINUTES_IN_MS,
-    private readonly makeClientRequest: () => Promise<T>
+    private readonly makeClientRequest: (
+      ...args: TRequestParams
+    ) => Promise<TResponse>
   ) {}
 
-  async getData(): Promise<Dto<T> | null> {
+  async getData(...args: TRequestParams): Promise<Dto<TResponse> | null> {
     const now = new Date();
     const debounceTimeForSuccess = new Date(
       now.getTime() - this.debounceTimeForSuccess
@@ -19,7 +24,7 @@ export class DataRetrieverService<T> {
       now.getTime() - this.debounceTimeForFailure
     );
 
-    const latestDataFromDatabase = await this.datastore.getLatest();
+    const latestDataFromDatabase = await this.datastore.getLatest(args);
 
     if (
       latestDataFromDatabase &&
@@ -32,16 +37,15 @@ export class DataRetrieverService<T> {
     }
 
     try {
-      const newData = await this.makeClientRequest();
+      const newData = await this.makeClientRequest(...args);
 
-      const newModel: SuccessDto<T> = {
+      const newModel: SuccessDto<TResponse> = {
         fetchedAt: now,
         data: newData,
         isSuccess: true,
       };
 
-      await this.datastore.save(newModel);
-
+      await this.datastore.save(newModel, args);
       return newModel;
     } catch (error) {
       const errorModel: FailureDto = {
@@ -50,7 +54,7 @@ export class DataRetrieverService<T> {
         error: String(error),
       };
 
-      await this.datastore.save(errorModel);
+      await this.datastore.save(errorModel, args);
       return errorModel;
     }
   }
