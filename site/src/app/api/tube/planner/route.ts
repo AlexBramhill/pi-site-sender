@@ -7,7 +7,6 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const queryParams = Object.fromEntries(url.searchParams.entries());
 
-    // Validate and parse using Zod
     const validatedParams =
       GetPlannedJourneyRequestQuerySchema.parse(queryParams);
 

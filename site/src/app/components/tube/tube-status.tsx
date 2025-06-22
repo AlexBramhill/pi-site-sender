@@ -9,15 +9,14 @@ export default function TubeStatusOverlay() {
     <ApiStatusWrapper apiResult={apiResult}>
       {(dto) => (
         <>
-          <h2>{dto.data.name}</h2>
           {dto.data.lineStatuses.map(
             (status: {
               statusSeverity: number;
               statusSeverityDescription: string;
             }) => (
-              <span key={status.statusSeverity}>
+              <h2 key={status.statusSeverity}>
                 {status.statusSeverityDescription}
-              </span>
+              </h2>
             )
           )}
         </>

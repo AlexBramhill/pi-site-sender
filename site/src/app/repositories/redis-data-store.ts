@@ -32,8 +32,7 @@ export class RedisDatastore<TSchema, TParams = unknown>
       return `${this.cacheKey}:no-query`;
     }
 
-    let paramKey: string;
-    paramKey =
+    const paramKey =
       typeof params === "object"
         ? JSON.stringify(params, Object.keys(params).sort())
         : String(params);

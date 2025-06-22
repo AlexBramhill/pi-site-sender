@@ -9,10 +9,10 @@ export const JourneySchema = z.object({
   description: z.string(),
   alternativeRoute: z.boolean(),
   legs: z.array(LegSchema),
-  fare: {
+  fare: z.object({
     totalCost: z.number(),
-    fares: [
-      {
+    fares: z.array(
+      z.object({
         lowZone: z.number(),
         highZone: z.number(),
         cost: z.number(),
@@ -21,28 +21,28 @@ export const JourneySchema = z.object({
         chargeLevel: z.string(),
         peak: z.number(),
         offPeak: z.number(),
-        taps: [
-          {
+        taps: z.array(
+          z.object({
             atcoCode: z.string(),
-            tapDetails: {
+            tapDetails: z.object({
               modeType: z.string(),
               validationType: z.string(),
               hostDeviceType: z.string(),
               busRouteId: z.string(),
               nationalLocationCode: z.number(),
               tapTimestamp: DateTransformer,
-            },
-          },
-        ],
-      },
-    ],
-    caveats: [
-      {
+            }),
+          })
+        ),
+      })
+    ),
+    caveats: z.array(
+      z.object({
         text: z.string(),
         type: z.string(),
-      },
-    ],
-  },
+      })
+    ),
+  }),
 });
 
 export type Journey = z.infer<typeof JourneySchema>;
