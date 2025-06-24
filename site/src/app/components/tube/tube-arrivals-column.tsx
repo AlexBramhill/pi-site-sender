@@ -57,6 +57,7 @@ const replaceLongerNames = (name: string) => {
     Bank: "B",
     Battersea: "Bttrsea",
     Kennington: "Kngton",
+    "Finchley Central": "Finchley",
   };
   return Object.entries(replacements).reduce((acc, [key, value]) => {
     return acc.replace(new RegExp(key, "g"), value);
