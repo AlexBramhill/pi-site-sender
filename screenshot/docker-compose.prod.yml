@@ -1,15 +1,26 @@
 services:
+  screenshot-common-builder:
+    extends:
+      file: ./common/docker-compose.prod.yml
+      service: screenshot-common-builder
+
   screenshot-taker:
+    depends_on:
+      - screenshot-common-builder
     extends:
       file: ./screenshot-taker/docker-compose.prod.yml
       service: screenshot-taker
 
   screenshot-processor:
+    depends_on:
+    - screenshot-common-builder
     extends:
       file: ./screenshot-processor/docker-compose.prod.yml
       service: screenshot-processor
 
   backend-orchestrator:
+    depends_on:
+      - screenshot-common-builder
     extends:
       file: ./backend-orchestrator/docker-compose.prod.yml
       service: backend-orchestrator

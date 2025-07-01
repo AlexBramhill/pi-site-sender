@@ -1,0 +1,10 @@
+services:
+  screenshot-common-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: screenshot-common-builder:prod
+    volumes:
+      - ./:/app/
+    environment:
+      - NODE_ENV=production
