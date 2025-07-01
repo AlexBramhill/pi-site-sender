@@ -9,3 +9,5 @@
 - [ ] General tech debt analysis
 
 - [ ] Clean configs/secrets
+
+- [ ] get watch working correctly
