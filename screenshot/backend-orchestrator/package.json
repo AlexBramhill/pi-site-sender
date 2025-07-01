@@ -10,6 +10,7 @@
     "@hono/node-server": "^1.14.3",
     "@hono/zod-validator": "^0.7.0",
     "@types/dotenv": "^6.1.1",
+    "@screenshot/common": "file:../common",
     "dotenv": "^16.5.0",
     "hono": "^4.7.11",
     "zod": "^3.25.46"
