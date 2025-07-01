@@ -1,5 +1,13 @@
 services:
+  site-sender-common-builder:
+    extends:
+      file: ../common/docker-compose.prod.yml
+      service: site-sender-common-builder
+
   site:
+    depends_on:
+      - site-sender-common-builder
+      - redis
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -17,6 +25,8 @@ services:
       - "3000:3000"
 
   redis:
+    depends_on:
+      - site-sender-common-builder
     image: redis:latest
     volumes:
       - pi-site-sender-redis_data:/data

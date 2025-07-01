@@ -1,5 +1,12 @@
 services:
+  site-sender-common-builder:
+    extends:
+      file: ../common/docker-compose.dev.yml
+      service: site-sender-common-builder
+
   screenshot-common-builder:
+    depends_on:
+      - site-sender-common-builder
     extends:
       file: ./common/docker-compose.dev.yml
       service: screenshot-common-builder

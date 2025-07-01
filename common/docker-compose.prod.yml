@@ -1,10 +1,10 @@
 services:
-  screenshot-common-builder:
+  site-sender-common-builder:
+    volumes:
+      - ./dist:/app/dist
     build:
       context: .
       dockerfile: Dockerfile.prod
-    image: screenshot-common-builder:latest
-    volumes:
-      - ./dist:/app/dist
+    image: site-sender-common-builder:latest
     environment:
       - NODE_ENV=production

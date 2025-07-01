@@ -10,6 +10,7 @@
     "@hono/node-server": "^1.14.3",
     "@hono/zod-validator": "^0.7.0",
     "@screenshot/common": "file:../common",
+    "@site-sender/common": "file:../../common",
     "hono": "^4.7.11",
     "playwright": "^1.52.0",
     "zod": "^3.25.46"

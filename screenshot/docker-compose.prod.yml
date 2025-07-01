@@ -1,5 +1,12 @@
 services:
+  site-sender-common-builder:
+    extends:
+      file: ../common/docker-compose.prod.yml
+      service: site-sender-common-builder
+
   screenshot-common-builder:
+    depends_on:
+      - site-sender-common-builder
     extends:
       file: ./common/docker-compose.prod.yml
       service: screenshot-common-builder
@@ -13,7 +20,7 @@ services:
 
   screenshot-processor:
     depends_on:
-    - screenshot-common-builder
+      - screenshot-common-builder
     extends:
       file: ./screenshot-processor/docker-compose.prod.yml
       service: screenshot-processor
