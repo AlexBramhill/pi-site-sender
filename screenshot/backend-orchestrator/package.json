@@ -1,5 +1,5 @@
 {
-  "name": "backend-orchestrator",
+  "name": "@screenshot/backend-orchestrator",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
