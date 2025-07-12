@@ -4,9 +4,10 @@ import { ScreenColourProfileSchema } from "./screen-colour-profile-schema.js";
 import { ScreenshotFormatSchema } from "../screenshot-format-schema.js";
 
 export const ScreenConfigSchema = z.object({
+    reference: z.string(),
     name: z.string(),
     dimensions: ScreenDimensionsSchema,
-    colourProfile: ScreenColourProfileSchema,
+    supportedColourProfile: z.array(ScreenColourProfileSchema),
     supportedFormats: z.array(ScreenshotFormatSchema),
 });
 
