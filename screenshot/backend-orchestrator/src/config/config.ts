@@ -1,10 +1,7 @@
 import { z } from "zod";
 import dotenv from "dotenv";
+import { ConfigSchema } from "../schemas/config-schema.js";
 
 dotenv.config();
 
-const configSchema = z.object({
-  PHOTO_REQUEST_FORMAT: z.enum(["png", "jpeg"]).default("png"),
-});
-
-export const config = configSchema.parse(process.env);
+export const config = ConfigSchema.parse(process.env);
