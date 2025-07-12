@@ -10,12 +10,12 @@ export const processScreenshot = async (
 
   const formData = new FormData();
 
-  const mimeType = `image/${config.PHOTO_REQUEST_FORMAT}`;
+  const mimeType = `image/${params.format}`;
 
   formData.append(
     "file",
     new Blob([screenshot], { type: mimeType }),
-    "screenshot." + config.PHOTO_REQUEST_FORMAT
+    "screenshot." + params.format
   );
 
   const response = await fetch(`http://screenshot-processor:4002/?${query}`, {
