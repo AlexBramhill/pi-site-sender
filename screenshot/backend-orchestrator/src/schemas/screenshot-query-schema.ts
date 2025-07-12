@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ScreenshotDimensionsSchema } from "./screenshot-dimensions.js";
+import { ScreenDimensionsSchema } from "./screen/screen-dimensions.js";
 
-export const ScreenshotQuerySchema = ScreenshotDimensionsSchema;
+export const ScreenshotQuerySchema = ScreenDimensionsSchema;
 
 export type ScreenshotQuery = z.infer<typeof ScreenshotQuerySchema>;

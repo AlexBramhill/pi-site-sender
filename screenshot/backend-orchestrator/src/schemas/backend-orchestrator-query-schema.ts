@@ -1,15 +1,15 @@
 import { z } from "zod";
 import { ScreenshotFormatSchema } from "./screenshot-format-schema.js";
 import { ScreenshotRotationSchema } from "./screenshot-rotation-schema.js";
-import { ScreenshotDimensionsSchema } from "./screenshot-dimensions.js";
-import { ScreenshotColourProfileSchema } from "./screenshot-colour-profile-schema.js";
+import { ScreenDimensionsSchema } from "./screen/screen-dimensions.js";
+import { ScreenColourProfileSchema } from "./screen/screen-colour-profile-schema.js";
 
 export const BackendOrchestratorQuerySchema = z.intersection(
-  ScreenshotDimensionsSchema,
+  ScreenDimensionsSchema,
   z.object({
     format: ScreenshotFormatSchema,
     rotation: ScreenshotRotationSchema,
-    colour_profile: ScreenshotColourProfileSchema,
+    colour_profile: ScreenColourProfileSchema,
   })
 );
 
