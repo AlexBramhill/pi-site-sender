@@ -1,11 +1,20 @@
 import { ScreenColourProfile } from "../../schemas/screen/screen-colour-profile-schema.js";
 import type { ScreenConfig } from "../../schemas/screen/screen-config-schema.js";
+import { ScreenReference } from "../../schemas/screen/screen-reference-schema.js";
 import { ScreenshotFormat } from "../../schemas/screenshot-format-schema.js";
 
 export const WAVESHARE_37: ScreenConfig = {
-    reference: "waveshare_37",
+    reference: ScreenReference.waveshare_37,
     name: "Waveshare 3.7 EInk Screen",
     dimensions: { width: 480, height: 280 },
     supportedColourProfile: [ScreenColourProfile.one_bit, ScreenColourProfile.two_bit],
     supportedFormats: [ScreenshotFormat.bmp_raw]
 }
+
+export const ScreenConfigs = [
+    ScreenReference.waveshare_37: {
+        name: "Waveshare 3.7 EInk Screen",
+        dimensions: { width: 480, height: 280 },
+        supportedColourProfile: [ScreenColourProfile.one_bit, ScreenColourProfile.two_bit],
+    }
+]
