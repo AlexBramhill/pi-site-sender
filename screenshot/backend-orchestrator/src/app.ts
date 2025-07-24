@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { BackendOrchestratorQuerySchema } from "./schemas/backend-orchestrator-query-schema.js";
 import { getWebsitePageScreenshot } from "./clients/screenshot-taker.js";
 import { processScreenshot } from "./clients/screenshot-processor.js";
 import { getContentTypeForScreenshotFormat } from "./helpers/get-content-type-for-screenshot-format.js";
