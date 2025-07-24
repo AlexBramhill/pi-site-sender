@@ -6,10 +6,11 @@ import { processScreenshot } from "./clients/screenshot-processor.js";
 import { getContentTypeForScreenshotFormat } from "./helpers/get-content-type-for-screenshot-format.js";
 import { transformToScreenshotProcessorQuery } from "./transformers/backend-orchestrator-query-to-screenshot-processor-query.js";
 import { transformToScreenshotQuery } from "./transformers/backend-orchestrator-query-to-screenshot-query.js";
+import { EnrichedBackendOrchestratorQuerySchema } from "./schemas/enriched-backend-orchestrator-query-schema.js";
 
 const app = new Hono();
 
-app.all("*", zValidator("query", BackendOrchestratorQuerySchema), async (c) => {
+app.all("*", zValidator("query", EnrichedBackendOrchestratorQuerySchema), async (c) => {
   const path = c.req.path;
   const queryParams = c.req.valid("query");
 
@@ -23,6 +24,7 @@ app.all("*", zValidator("query", BackendOrchestratorQuerySchema), async (c) => {
     path,
     transformToScreenshotQuery(queryParams)
   );
+
   const processedImage = await processScreenshot(
     websiteImage,
     transformToScreenshotProcessorQuery(queryParams)
