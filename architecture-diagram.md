@@ -1,8 +1,58 @@
+# Site Sender
+Send a screenshot from a website to a Raspberry Pi Pico's display on a schedule -- allowing the best of both the Pico form factor and the versatility of modern web design.
+
+Useful for projects where you're after more complex huds.
+
+## Goals
+### Must
+- [ ] Display a screenshot of a web page.
+- [ ] Support existing pico python implementation
+- [ ] Support new pico c++ implemention
+### Should
+- [ ] Support multiple display types
+- [ ] Support multple colour profiles
+- [ ] Support multiple rotations
+### Could
+- [ ] Support eink hard/soft refresh
+- [ ] Explore maximum speed of refresh (c++ only)
+## Main concepts
+
+### 
+```mermaid
+---
+title: Architecture Overview
+---
+flowchart
+
+subgraph Microcontroller
+displayManager[Display Manager]
+imageClient[Image Client]
+imageClient-- Gives image to -->displayManager
+end
+
+subgraph Website Sender Backend
+backendOrchestrator[Backend Orchestrator]
+screenshotTaker[Screenshot Taker]
+imageProcessor[Image Processor]
+
+backendOrchestrator-- Requests image from -->screenshotTaker
+backendOrchestrator-- Requests image processed -->imageProcessor
+end
+
+subgraph Website
+website[Website]
+end
+
+imageClient-- Requests image from -->backendOrchestrator
+screenshotTaker-- Takes screenshot from-->website
+```
+## Sequence diagrams -- Key decisions
+There is currently reworking of the general architecture occuring prior to becoming too entrenched in a solution.
 
 
 ```mermaid
 ---
-title: Sequence Diagram
+title: Sequence Diagram (Shared Display Knowledge)
 ---
 sequenceDiagram
 
@@ -21,7 +71,6 @@ box Website
 participant Website
 end
 Microcontroller ->> Backend Orchestrator: GET /{MicrocontrollerName}
-Note over Microcontroller,Backend Orchestrator: Micro controllers have an understanding of what current screen they are using,
 
 Backend Orchestrator ->> Microcontroller Configuration Service: GET /{MicrocontrollerName}
 Microcontroller Configuration Service ->> Backend Orchestrator: Microcontroller configuration
@@ -34,39 +83,4 @@ Image Processor ->> Backend Orchestrator: Processed image
 Backend Orchestrator ->> Microcontroller: Processed image
 
 
-```
-
-```mermaid
----
-title: Architecture Overview
----
-flowchart
-
-subgraph Microcontroller
-subgraph Core 2
-displayManager[Display Manager]
-end
-subgraph Core 1
-imageClient[Image Client]
-end
-imageClient-->displayManager
-end
-
-subgraph Website Sender Backend
-backendOrchestrator[Backend Orchestrator]
-screenshotTaker[Screenshot Taker]
-imageProcessor[Image Processor]
-cache[(Cache)]
-
-backendOrchestrator-->screenshotTaker
-backendOrchestrator-->imageProcessor
-screenshotTaker-->cache-->screenshotTaker
-end
-
-subgraph Website
-website[Website]
-end
-
-imageClient-->backendOrchestrator
-screenshotTaker-->website
 ```
