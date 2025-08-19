@@ -1,8 +1,4 @@
-# Site Sender
-Send a screenshot from a website to a Raspberry Pi Pico's display on a schedule -- allowing the best of both the Pico form factor and the versatility of modern web design.
-
-Useful for projects where you're after more complex huds.
-
+# Design Considerations
 ## Goals
 ### Must
 - [ ] Display a screenshot of a web page.
