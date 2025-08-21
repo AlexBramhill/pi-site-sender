@@ -105,7 +105,7 @@ end
 client -- Microcontroller name --> backendConfig
 screenshotBackend -- GET Website Address --> website
 ```
-
+However, when looking at the sequencing, we see a problem, especially if targetting low latency. That is that the lookups may be too time-costly to run each time.
 
 ```mermaid
 ---
@@ -138,6 +138,68 @@ Screenshot Taker ->> Backend Orchestrator: Webpage screenshot
 Backend Orchestrator ->> Image Processor: GET /?rotation={ROTATION}&colourProfile{COLOUR_PROFILE}&fileFormat{FILE_FORMAT} and Webpage screenshot
 Image Processor ->> Backend Orchestrator: Processed image
 Backend Orchestrator ->> Microcontroller: Processed image
+```
+#### The hybrid approach
 
+```mermaid
+---
+title: Sequence Diagram (Hybrid)
+---
+sequenceDiagram
+
+box Microcontroller
+participant Microcontroller
+end
+
+box Backend Service
+participant Backend Orchestrator
+participant Redis
+participant Microcontroller Configuration Service
+participant Image Processor
+participant Screenshot Taker
+end
+
+box Website
+participant Website
+end
+
+Microcontroller ->> Backend Orchestrator: GET /{MicrocontrollerName}/config
+Backend Orchestrator ->> Microcontroller Configuration Service: GET /{MicrocontrollerName}
+Microcontroller Configuration Service ->>+ Backend Orchestrator: Microcontroller configuration (display type)
+Backend Orchestrator ->>Redis: Microcontroller configuration (keyed by display type)
+Backend Orchestrator ->>- Microcontroller: Microcontroller configuration (display type)
+Microcontroller ->> Microcontroller: Initalise display driver
+
+Microcontroller ->> Backend Orchestrator: GET /{MicrocontrollerName}/image
+Backend Orchestrator ->> Redis: Get config
+
+alt Config missing
+Redis ->> Backend Orchestrator: Missing config
+Backend Orchestrator ->> Microcontroller: 404: Cache miss
+Microcontroller ->> Microcontroller: Trigger config reset
+end
+Redis ->> Backend Orchestrator: Config
+par Check cache validity
+Backend Orchestrator ->> Microcontroller Configuration Service: Get Saved Config
+Microcontroller Configuration Service ->> Backend Orchestrator: Saved Config
+Backend Orchestrator ->> Backend Orchestrator: Check configs match
+alt Config mismatch
+Backend Orchestrator ->> Microcontroller: 404: Update required
+Microcontroller ->> Microcontroller: Trigger config reset
+end
+alt Config missing
+Backend Orchestrator ->> Microcontroller: 404: Missing config
+Microcontroller ->> Microcontroller: Trigger config reset
+end
+and Get screenshot
+Backend Orchestrator ->> Screenshot Taker: GET screenshot
+Screenshot Taker ->> Website: GET
+Website ->> Screenshot Taker: Webpage
+Screenshot Taker ->> Backend Orchestrator: Webpage screenshot
+Backend Orchestrator ->> Image Processor: Process image
+Image Processor ->> Backend Orchestrator: Processed image
+Backend Orchestrator ->> Microcontroller: Processed image
+Microcontroller ->> Microcontroller: Update image
+end
 
 ```
