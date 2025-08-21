@@ -5,7 +5,7 @@ Useful for projects where you're after more complex huds.
 
 See readmes in each service for more information:
 
-- [pico](pico/readme.md)
+- [pico (micropython)](https://github.com/AlexBramhill/pico-image-fetcher/blob/main/readme.md)
 
 - [screenshot](screenshot/readme.md)
 
