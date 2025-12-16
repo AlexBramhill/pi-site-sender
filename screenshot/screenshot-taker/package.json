@@ -9,8 +9,8 @@
   "dependencies": {
     "@hono/node-server": "^1.14.3",
     "@hono/zod-validator": "^0.7.0",
-    "hono": "^4.7.11",
-    "playwright": "^1.52.0",
+    "hono": "^4.11.1",
+    "playwright": "^1.55.1",
     "zod": "^3.25.46"
   },
   "devDependencies": {
