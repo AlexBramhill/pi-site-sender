@@ -10,7 +10,7 @@ import {
 import type { ScreenshotQuery } from "./schemas/screenshot-query-schema.js";
 
 class BrowserManager {
-  private static instance: BrowserManager | null = null;
+  private static instancePromise: Promise<BrowserManager> | null = null;
   private browser: Browser | null = null;
   private context: BrowserContext | null = null;
   private page: Page | null = null;
@@ -26,16 +26,32 @@ class BrowserManager {
     launchOptions?: LaunchOptions;
     initialPageUrl?: string;
   }): Promise<BrowserManager> {
-    if (!BrowserManager.instance) {
-      BrowserManager.instance = new BrowserManager();
-      await BrowserManager.instance.init(contextOptions, launchOptions);
+    if (!BrowserManager.instancePromise) {
+      BrowserManager.instancePromise = BrowserManager.initializeInstance(
+        contextOptions,
+        launchOptions
+      ).catch((error) => {
+        BrowserManager.instancePromise = null;
+        throw error;
+      });
     }
+
+    const instance = await BrowserManager.instancePromise;
 
     if (initialPageUrl) {
-      await BrowserManager.instance.visitPage(initialPageUrl);
+      await instance.visitPage(initialPageUrl);
     }
 
-    return BrowserManager.instance;
+    return instance;
+  }
+
+  private static async initializeInstance(
+    contextOptions?: BrowserContextOptions,
+    launchOptions?: LaunchOptions
+  ): Promise<BrowserManager> {
+    const instance = new BrowserManager();
+    await instance.init(contextOptions, launchOptions);
+    return instance;
   }
 
   private async init(
@@ -87,7 +103,7 @@ class BrowserManager {
       this.browser = null;
       this.context = null;
       this.page = null;
-      BrowserManager.instance = null;
+      BrowserManager.instancePromise = null;
     }
   }
 
