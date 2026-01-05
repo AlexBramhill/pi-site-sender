@@ -28,7 +28,7 @@ app.all("*", zValidator("query", BackendOrchestratorQuerySchema), async (c) => {
     transformToScreenshotProcessorQuery(queryParams)
   );
 
-  return c.body(processedImage, 200, {
+  return c.body(Uint8Array.from(processedImage), 200, {
     "Content-Type": getContentTypeForScreenshotFormat(queryParams.format),
   });
 });

@@ -12,7 +12,7 @@ app.get("/", zValidator("query", ScreenshotQuerySchema), async (c) => {
 
   console.log("Screenshot buffer length:", screenshotBuffer.length);
   c.header("Content-Type", `image/${query.format}`);
-  return c.body(screenshotBuffer, 200, {
+  return c.body(Uint8Array.from(screenshotBuffer), 200, {
     "Content-Type": `image/${query.format}`,
   });
 });
